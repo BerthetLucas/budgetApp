@@ -1,8 +1,8 @@
 import { Suspense } from "react";
-import { AddTransactionDrawer } from "@/components/add-transaction-drawer";
-import { DashboardContent } from "@/components/dashboard-content";
-import { SummarySkeleton } from "@/components/summary-skeleton";
-import { ListSkeleton } from "@/components/list-skeleton";
+import { AddTransactionDrawer } from "@/components/drawer/add-transaction-drawer";
+import { DashboardContent } from "@/components/dashboard/dashboard-content";
+import { SummarySkeleton } from "@/components/skeleton/summary-skeleton";
+import { ListSkeleton } from "@/components/skeleton/list-skeleton";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {

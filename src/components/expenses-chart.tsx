@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Transaction } from "@/types";
@@ -106,15 +107,28 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
         </button>
       </div>
 
+      <AnimatePresence mode="wait">
       {chartData.length === 0 ? (
-        <div className="text-center py-20">
+        <motion.div
+          key="empty"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="text-center py-20"
+        >
           <p className="text-3xl mb-2">📊</p>
           <p className="text-sm text-muted-foreground">
             Aucune dépense ce mois-ci
           </p>
-        </div>
+        </motion.div>
       ) : (
-        <>
+        <motion.div
+          key="chart"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="space-y-6"
+        >
           {/* Donut chart */}
           <div className="relative">
             <ResponsiveContainer width="100%" height={240}>
@@ -157,12 +171,18 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
 
           {/* Category breakdown */}
           <div className="bg-background rounded-2xl overflow-hidden divide-y border shadow-sm">
-            {chartData.map((entry) => {
+            {chartData.map((entry, index) => {
               const pct = totalExpenses > 0
                 ? Math.round((entry.value / totalExpenses) * 100)
                 : 0;
               return (
-                <div key={entry.name} className="flex items-center gap-3 px-4 py-3.5">
+                <motion.div
+                  key={entry.name}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25, delay: index * 0.05, ease: "easeOut" }}
+                  className="flex items-center gap-3 px-4 py-3.5"
+                >
                   <span
                     className="h-2.5 w-2.5 rounded-full shrink-0"
                     style={{ background: entry.fill }}
@@ -177,12 +197,13 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
                   <span className="text-sm font-bold tabular-nums">
                     {formatCurrency(entry.value)} €
                   </span>
-                </div>
+                </motion.div>
               );
             })}
           </div>
-        </>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
   );
 }

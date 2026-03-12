@@ -21,7 +21,7 @@ export function DashboardTabs({ transactions }: DashboardTabsProps) {
 
   return (
     <Tabs defaultValue="all">
-      <TabsList>
+      <TabsList className="w-full">
         <TabsTrigger value="all">Tout</TabsTrigger>
         <TabsTrigger value="income">Revenus</TabsTrigger>
         <TabsTrigger value="expense">Dépenses</TabsTrigger>

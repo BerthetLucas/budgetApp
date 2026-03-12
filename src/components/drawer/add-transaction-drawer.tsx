@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { TransactionForm } from "@/components/transaction-form";
+import { TransactionForm } from "@/components/drawer/transaction-form";
 
 export function AddTransactionDrawer() {
   const [open, setOpen] = useState(false);

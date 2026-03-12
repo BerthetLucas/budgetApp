@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "motion/react";
 import { Transaction } from "@/types";
 import { formatCurrency } from "@/lib/utils";
 
@@ -18,7 +21,12 @@ export function DashboardSummary({ transactions }: DashboardSummaryProps) {
   const balance = totalIncome - totalExpenses;
 
   return (
-    <div className="rounded-3xl bg-foreground text-background p-6 mb-4 shadow-lg">
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="rounded-3xl bg-foreground text-background p-6 mb-4 shadow-lg"
+    >
       <p className="text-sm font-medium opacity-60 mb-2">Solde actuel</p>
       <p className="text-4xl font-bold tracking-tight mb-6">
         {balance >= 0 ? "+" : ""}
@@ -38,6 +46,6 @@ export function DashboardSummary({ transactions }: DashboardSummaryProps) {
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
