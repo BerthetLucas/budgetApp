@@ -1,7 +1,7 @@
 import { Transaction } from "@/types";
 
 export interface TransactionRowProps {
-  tx: Transaction;
+  transaction: Transaction;
   delay: number;
   isPending: boolean;
   onDelete: (id: string) => void;
@@ -9,7 +9,7 @@ export interface TransactionRowProps {
 
 export interface TransactionGroupProps {
   date: string;
-  txs: Transaction[];
+  transactions: Transaction[];
   baseDelay: number;
   isPending: boolean;
   onDelete: (id: string) => void;

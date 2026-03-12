@@ -1,10 +1,10 @@
 "use client";
 
-import { useOptimistic, useTransition, useMemo } from "react";
-import { motion } from "motion/react";
+import { useOptimistic, useTransition } from "react";
 import { deleteTransaction } from "@/actions/transactions";
 import { Transaction } from "@/types";
 import { TransactionGroup } from "./transaction-group";
+import { TransactionEmpty } from "./transaction-empty";
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -12,49 +12,37 @@ interface TransactionListProps {
 
 export function TransactionList({ transactions }: TransactionListProps) {
   const [isPending, startTransition] = useTransition();
-  const [optimisticList, removeOptimistic] = useOptimistic(
+  const [transactionList, removeFromList] = useOptimistic(
     transactions,
-    (current, idToRemove: string) => current.filter((t) => t.id !== idToRemove)
+    (current, idToRemove: string) =>
+      current.filter((transaction) => transaction.id !== idToRemove)
   );
 
-  const grouped = useMemo(
-    () =>
-      optimisticList.reduce<Record<string, Transaction[]>>((acc, tx) => {
-        if (!acc[tx.date]) acc[tx.date] = [];
-        acc[tx.date].push(tx);
-        return acc;
-      }, {}),
-    [optimisticList]
-  );
+  const grouped: Record<string, Transaction[]> = {};
+  for (const tx of transactionList) {
+    if (!grouped[tx.date]) grouped[tx.date] = [];
+    grouped[tx.date].push(tx);
+  }
 
   function handleDelete(id: string) {
     startTransition(async () => {
-      removeOptimistic(id);
+      removeFromList(id);
       await deleteTransaction(id);
     });
   }
 
-  if (optimisticList.length === 0) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-center py-16"
-      >
-        <p className="text-3xl mb-2">💸</p>
-        <p className="text-sm text-muted-foreground">Aucune transaction</p>
-      </motion.div>
-    );
+  if (transactionList.length === 0) {
+    return <TransactionEmpty />;
   }
 
   return (
     <div className="space-y-5">
-      {Object.entries(grouped).map(([date, txs], groupIndex) => (
+      {Object.entries(grouped).map(([date, transactions], index) => (
         <TransactionGroup
           key={date}
           date={date}
-          txs={txs}
-          baseDelay={groupIndex * 0.06}
+          transactions={transactions}
+          baseDelay={index * 0.06}
           isPending={isPending}
           onDelete={handleDelete}
         />

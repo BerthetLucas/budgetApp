@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -55,26 +55,22 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
     }
   }
 
-  const chartData = useMemo(() => {
-    const monthStr = String(selectedMonth + 1).padStart(2, "0");
-    const prefix = `${selectedYear}-${monthStr}`;
-
-    const grouped: Record<string, number> = {};
-    for (const tx of transactions) {
-      if (tx.type !== "expense") continue;
-      if (!tx.date.startsWith(prefix)) continue;
-      grouped[tx.category] = (grouped[tx.category] ?? 0) + tx.amount;
-    }
-
-    return Object.entries(grouped)
-      .sort(([, a], [, b]) => b - a)
-      .map(([category, value], index) => ({
-        name: category,
-        value,
-        fill: CHART_COLORS[index % CHART_COLORS.length],
-        emoji: CATEGORY_EMOJI[category] ?? "📂",
-      }));
-  }, [transactions, selectedYear, selectedMonth]);
+  const monthStr = String(selectedMonth + 1).padStart(2, "0");
+  const prefix = `${selectedYear}-${monthStr}`;
+  const grouped: Record<string, number> = {};
+  for (const tx of transactions) {
+    if (tx.type !== "expense") continue;
+    if (!tx.date.startsWith(prefix)) continue;
+    grouped[tx.category] = (grouped[tx.category] ?? 0) + tx.amount;
+  }
+  const chartData = Object.entries(grouped)
+    .sort(([, a], [, b]) => b - a)
+    .map(([category, value], index) => ({
+      name: category,
+      value,
+      fill: CHART_COLORS[index % CHART_COLORS.length],
+      emoji: CATEGORY_EMOJI[category] ?? "📂",
+    }));
 
   const totalExpenses = chartData.reduce((sum, d) => sum + d.value, 0);
 

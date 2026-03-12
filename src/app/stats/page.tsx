@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getTransactions } from "@/actions/transactions";
 import { ExpensesChart } from "@/components/expenses-chart";
 import { ThemeToggle } from "@/components/theme-toggle";
+
+export const metadata: Metadata = {
+  title: "Statistiques",
+  description: "Analyse de vos dépenses et revenus",
+};
 
 async function StatsContent() {
   const transactions = await getTransactions();

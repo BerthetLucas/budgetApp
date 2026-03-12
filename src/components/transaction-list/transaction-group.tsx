@@ -4,7 +4,13 @@ import { motion, AnimatePresence } from "motion/react";
 import { TransactionRow } from "./transaction-row";
 import { TransactionGroupProps } from "./types";
 
-export function TransactionGroup({ date, txs, baseDelay, isPending, onDelete }: TransactionGroupProps) {
+export function TransactionGroup({
+  date,
+  transactions,
+  baseDelay,
+  isPending,
+  onDelete,
+}: TransactionGroupProps) {
   const label = new Date(date + "T00:00:00").toLocaleDateString("fr-FR", {
     weekday: "long",
     day: "numeric",
@@ -17,15 +23,15 @@ export function TransactionGroup({ date, txs, baseDelay, isPending, onDelete }: 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: baseDelay, ease: "easeOut" }}
     >
-      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2 px-1">
+      <p className="text-muted-foreground mb-2 px-1 text-xs font-semibold tracking-wide uppercase">
         {label}
       </p>
-      <div className="bg-background rounded-2xl overflow-hidden divide-y shadow-sm border">
+      <div className="bg-background divide-y overflow-hidden rounded-2xl border shadow-sm">
         <AnimatePresence initial={false}>
-          {txs.map((tx, i) => (
+          {transactions.map((transaction, i) => (
             <TransactionRow
-              key={tx.id}
-              tx={tx}
+              key={transaction.id}
+              transaction={transaction}
               delay={baseDelay + i * 0.04}
               isPending={isPending}
               onDelete={onDelete}

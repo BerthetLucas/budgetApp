@@ -3,10 +3,18 @@
 import { motion } from "motion/react";
 import { Trash2 } from "lucide-react";
 import { CATEGORY_EMOJI } from "@/constants/categories";
-import { formatCurrency } from "@/lib/utils";
 import { TransactionRowProps } from "./types";
+import { TransactionDescription } from "./transactionDescription";
+import { TransactionAmount } from "./transaction-amount";
 
-export function TransactionRow({ tx, delay, isPending, onDelete }: TransactionRowProps) {
+export function TransactionRow({
+  transaction,
+  delay,
+  isPending,
+  onDelete,
+}: TransactionRowProps) {
+  const { category, description, type, amount, id } = transaction;
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -8 }}
@@ -15,32 +23,15 @@ export function TransactionRow({ tx, delay, isPending, onDelete }: TransactionRo
       transition={{ duration: 0.25, delay, ease: "easeOut" }}
       className="flex items-center gap-3 px-4 py-3.5"
     >
-      <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center text-lg shrink-0">
-        {CATEGORY_EMOJI[tx.category] ?? "📂"}
+      <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg">
+        {CATEGORY_EMOJI[category] ?? "📂"}
       </div>
-
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium leading-tight">{tx.category}</p>
-        {tx.description ? (
-          <p className="text-xs text-muted-foreground truncate mt-0.5">
-            {tx.description}
-          </p>
-        ) : null}
-      </div>
-
-      <span
-        className={`text-sm font-bold tabular-nums ${
-          tx.type === "income" ? "text-green-600" : "text-foreground"
-        }`}
-      >
-        {tx.type === "income" ? "+" : "-"}
-        {formatCurrency(tx.amount)} €
-      </span>
-
+      <TransactionDescription category={category} description={description} />
+      <TransactionAmount type={type} amount={amount} />
       <button
         disabled={isPending}
-        onClick={() => onDelete(tx.id)}
-        className="text-muted-foreground/40 hover:text-destructive transition-colors disabled:opacity-30 p-1"
+        onClick={() => onDelete(id)}
+        className="text-muted-foreground/40 hover:text-destructive p-1 transition-colors disabled:opacity-30"
       >
         <Trash2 className="h-4 w-4" />
       </button>

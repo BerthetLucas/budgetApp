@@ -41,10 +41,7 @@ export async function addTransaction(
 
 export async function deleteTransaction(id: string) {
   const supabase = await createClient();
-  const { error } = await supabase
-    .from("transactions")
-    .delete()
-    .eq("id", id);
+  const { error } = await supabase.from("transactions").delete().eq("id", id);
 
   if (error) {
     throw new Error(error.message);

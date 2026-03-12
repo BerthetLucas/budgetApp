@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { TransactionForm } from "@/components/drawer/transaction-form";
+import { TransactionForm } from "@/components/drawer/AddTransactionForm/transaction-form";
 
 export function AddTransactionDrawer() {
   const [open, setOpen] = useState(false);
@@ -24,7 +24,7 @@ export function AddTransactionDrawer() {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="max-w-md mx-auto w-full px-4 pb-8">
+        <div className="mx-auto w-full max-w-md px-4 pb-8">
           <DrawerHeader className="px-0">
             <DrawerTitle>Nouvelle transaction</DrawerTitle>
           </DrawerHeader>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { TransactionList } from "@/components/transaction-list";
 import { Transaction } from "@/types";
@@ -10,14 +9,8 @@ interface DashboardTabsProps {
 }
 
 export function DashboardTabs({ transactions }: DashboardTabsProps) {
-  const incomeTransactions = useMemo(
-    () => transactions.filter((t) => t.type === "income"),
-    [transactions]
-  );
-  const expenseTransactions = useMemo(
-    () => transactions.filter((t) => t.type === "expense"),
-    [transactions]
-  );
+  const incomeTransactions = transactions.filter((transaction) => transaction.type === "income");
+  const expenseTransactions = transactions.filter((transaction) => transaction.type === "expense");
 
   return (
     <Tabs defaultValue="all">
