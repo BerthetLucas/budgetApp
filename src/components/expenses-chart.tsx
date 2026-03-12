@@ -80,7 +80,7 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
       <div className="flex items-center justify-between">
         <button
           onClick={goToPrevMonth}
-          className="p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl p-2 transition-colors"
           aria-label="Mois précédent"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -92,7 +92,7 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
           onClick={goToNextMonth}
           disabled={isCurrentMonth}
           className={cn(
-            "p-2 rounded-xl transition-colors",
+            "rounded-xl p-2 transition-colors",
             isCurrentMonth
               ? "text-muted-foreground/30 cursor-not-allowed"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -104,101 +104,115 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
       </div>
 
       <AnimatePresence mode="wait">
-      {chartData.length === 0 ? (
-        <motion.div
-          key="empty"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="text-center py-20"
-        >
-          <p className="text-3xl mb-2">📊</p>
-          <p className="text-sm text-muted-foreground">
-            Aucune dépense ce mois-ci
-          </p>
-        </motion.div>
-      ) : (
-        <motion.div
-          key="chart"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="space-y-6"
-        >
-          {/* Donut chart */}
-          <div className="relative">
-            <ResponsiveContainer width="100%" height={240}>
-              <PieChart>
-                <Pie
-                  data={chartData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={72}
-                  outerRadius={108}
-                  paddingAngle={2}
-                  dataKey="value"
-                  strokeWidth={0}
-                >
-                  {chartData.map((entry, index) => (
-                    <Cell key={index} fill={entry.fill} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value: number) => [`${formatCurrency(value)} €`, "Dépenses"]}
-                  contentStyle={{
-                    borderRadius: "0.75rem",
-                    border: "1px solid var(--border)",
-                    background: "var(--card)",
-                    color: "var(--card-foreground)",
-                    fontSize: "0.8rem",
-                  }}
-                  labelStyle={{ fontWeight: 600 }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            {/* Center label */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <p className="text-xs text-muted-foreground font-medium">Total</p>
-              <p className="text-xl font-bold tracking-tight">
-                {formatCurrency(totalExpenses)} €
-              </p>
-            </div>
-          </div>
-
-          {/* Category breakdown */}
-          <div className="bg-background rounded-2xl overflow-hidden divide-y border shadow-sm">
-            {chartData.map((entry, index) => {
-              const pct = totalExpenses > 0
-                ? Math.round((entry.value / totalExpenses) * 100)
-                : 0;
-              return (
-                <motion.div
-                  key={entry.name}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.25, delay: index * 0.05, ease: "easeOut" }}
-                  className="flex items-center gap-3 px-4 py-3.5"
-                >
-                  <span
-                    className="h-2.5 w-2.5 rounded-full shrink-0"
-                    style={{ background: entry.fill }}
+        {chartData.length === 0 ? (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="py-20 text-center"
+          >
+            <p className="mb-2 text-3xl">📊</p>
+            <p className="text-muted-foreground text-sm">
+              Aucune dépense ce mois-ci
+            </p>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="chart"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="space-y-6"
+          >
+            {/* Donut chart */}
+            <div className="relative">
+              <ResponsiveContainer width="100%" height={240}>
+                <PieChart>
+                  <Pie
+                    data={chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={72}
+                    outerRadius={108}
+                    paddingAngle={2}
+                    dataKey="value"
+                    strokeWidth={0}
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={index} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value: number) => [
+                      `${formatCurrency(value)} €`,
+                      "Dépenses",
+                    ]}
+                    contentStyle={{
+                      borderRadius: "0.75rem",
+                      border: "1px solid var(--border)",
+                      background: "var(--card)",
+                      color: "var(--card-foreground)",
+                      fontSize: "0.8rem",
+                    }}
+                    labelStyle={{ fontWeight: 600 }}
                   />
-                  <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center text-lg shrink-0">
-                    {entry.emoji}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium leading-tight">{entry.name}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{pct}% du total</p>
-                  </div>
-                  <span className="text-sm font-bold tabular-nums">
-                    {formatCurrency(entry.value)} €
-                  </span>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-      )}
+                </PieChart>
+              </ResponsiveContainer>
+              {/* Center label */}
+              <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+                <p className="text-muted-foreground text-xs font-medium">
+                  Total
+                </p>
+                <p className="text-xl font-bold tracking-tight">
+                  {formatCurrency(totalExpenses)} €
+                </p>
+              </div>
+            </div>
+
+            {/* Category breakdown */}
+            <div className="bg-background divide-y overflow-hidden rounded-2xl border shadow-sm">
+              {chartData.map((entry, index) => {
+                const pct =
+                  totalExpenses > 0
+                    ? Math.round((entry.value / totalExpenses) * 100)
+                    : 0;
+                return (
+                  <motion.div
+                    key={entry.name}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.25,
+                      delay: index * 0.05,
+                      ease: "easeOut",
+                    }}
+                    className="flex items-center gap-3 px-4 py-3.5"
+                  >
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-full"
+                      style={{ background: entry.fill }}
+                    />
+                    <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg">
+                      {entry.emoji}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm leading-tight font-medium">
+                        {entry.name}
+                      </p>
+                      <p className="text-muted-foreground mt-0.5 text-xs">
+                        {pct}% du total
+                      </p>
+                    </div>
+                    <span className="text-sm font-bold tabular-nums">
+                      {formatCurrency(entry.value)} €
+                    </span>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );

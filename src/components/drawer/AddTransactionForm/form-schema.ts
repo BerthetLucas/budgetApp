@@ -3,7 +3,7 @@ import z from "zod";
 export const schema = z.object({
   type: z.enum(["income", "expense"]),
   category: z.string().min(1, "Catégorie requise"),
-  amount: z.number().positive("Montant invalide"),
+  amount: z.coerce.number().positive("Montant invalide"),
   description: z.string().optional(),
   date: z.string().min(1, "Date requise"),
 });

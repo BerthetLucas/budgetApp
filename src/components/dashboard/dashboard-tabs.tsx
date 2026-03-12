@@ -9,8 +9,12 @@ interface DashboardTabsProps {
 }
 
 export function DashboardTabs({ transactions }: DashboardTabsProps) {
-  const incomeTransactions = transactions.filter((transaction) => transaction.type === "income");
-  const expenseTransactions = transactions.filter((transaction) => transaction.type === "expense");
+  const incomeTransactions = transactions.filter(
+    (transaction) => transaction.type === "income"
+  );
+  const expenseTransactions = transactions.filter(
+    (transaction) => transaction.type === "expense"
+  );
 
   return (
     <Tabs defaultValue="all">
