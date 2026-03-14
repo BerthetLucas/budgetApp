@@ -9,3 +9,13 @@ export type Transaction = {
   type: "income" | "expense";
   created_at: string;
 };
+
+export type RecurringTransaction = {
+  id: string;
+  type: "income" | "expense";
+  category: string;
+  amount: number;
+  description: string | null;
+  day_of_month: number;
+  created_at: string;
+};
