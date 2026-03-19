@@ -13,10 +13,12 @@ import { DescriptionAndDayField } from "./fields/description-and-day-field";
 
 interface RecurringTransactionFormProps {
   onSuccess: () => void;
+  customCategories?: string[];
 }
 
 export function RecurringTransactionForm({
   onSuccess,
+  customCategories,
 }: RecurringTransactionFormProps) {
   const [isPending, startTransition] = useTransition();
   const form = useRecurringTransactionForm();
@@ -44,7 +46,7 @@ export function RecurringTransactionForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <TypeToggleField />
         <AmountField />
-        <CategoryField />
+        <CategoryField customCategories={customCategories} />
         <DescriptionAndDayField />
         <Button
           type="submit"
