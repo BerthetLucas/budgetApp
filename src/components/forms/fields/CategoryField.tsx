@@ -3,7 +3,6 @@ import { useFormContext, useWatch } from "react-hook-form";
 import type { TransactionFormValues } from "@/components/drawer/AddTransactionForm/form-schema";
 import type { RecurringFormValues } from "@/components/settings/RecurringTransactionForm/form-schema";
 import {
-  CATEGORY_EMOJI,
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
 } from "@/constants/categories";
@@ -33,7 +32,7 @@ export function CategoryField() {
         </option>
         {categories.map((cat) => (
           <option key={cat} value={cat}>
-            {CATEGORY_EMOJI[cat]} {cat}
+            {cat}
           </option>
         ))}
       </select>

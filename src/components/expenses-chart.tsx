@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, BarChart2, Folder } from "lucide-react";
 import { Transaction } from "@/types";
-import { CATEGORY_EMOJI } from "@/constants/categories";
+import { CATEGORY_ICON } from "@/constants/categories";
 import { formatCurrency, cn } from "@/lib/utils";
 
 interface ExpensesChartProps {
@@ -69,7 +69,7 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
       name: category,
       value,
       fill: CHART_COLORS[index % CHART_COLORS.length],
-      emoji: CATEGORY_EMOJI[category] ?? "📂",
+      icon: CATEGORY_ICON[category] ?? Folder,
     }));
 
   const totalExpenses = chartData.reduce((sum, d) => sum + d.value, 0);
@@ -112,7 +112,7 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
             exit={{ opacity: 0 }}
             className="py-20 text-center"
           >
-            <p className="mb-2 text-3xl">📊</p>
+            <BarChart2 className="text-muted-foreground mx-auto mb-2 h-8 w-8" />
             <p className="text-muted-foreground text-sm">
               Aucune dépense ce mois-ci
             </p>
@@ -177,6 +177,7 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
                   totalExpenses > 0
                     ? Math.round((entry.value / totalExpenses) * 100)
                     : 0;
+                const EntryIcon = entry.icon;
                 return (
                   <motion.div
                     key={entry.name}
@@ -193,8 +194,8 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
                       className="h-2.5 w-2.5 shrink-0 rounded-full"
                       style={{ background: entry.fill }}
                     />
-                    <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg">
-                      {entry.emoji}
+                    <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+                      <EntryIcon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm leading-tight font-medium">

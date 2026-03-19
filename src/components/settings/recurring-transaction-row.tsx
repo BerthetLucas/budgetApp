@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Trash2 } from "lucide-react";
-import { CATEGORY_EMOJI } from "@/constants/categories";
+import { Trash2, Folder } from "lucide-react";
+import { CATEGORY_ICON } from "@/constants/categories";
 import { formatCurrency } from "@/lib/utils";
 import { RecurringTransaction } from "@/types";
 
@@ -19,6 +19,7 @@ export function RecurringTransactionRow({
 }: RecurringTransactionRowProps) {
   const { id, category, description, type, amount, day_of_month } = recurring;
   const isIncome = type === "income";
+  const Icon = CATEGORY_ICON[category] ?? Folder;
 
   return (
     <motion.div
@@ -28,8 +29,8 @@ export function RecurringTransactionRow({
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="flex items-center gap-3 px-4 py-3.5"
     >
-      <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg">
-        {CATEGORY_EMOJI[category] ?? "📂"}
+      <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+        <Icon className="h-5 w-5" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-foreground truncate text-sm font-medium">

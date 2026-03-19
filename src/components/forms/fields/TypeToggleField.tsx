@@ -1,6 +1,7 @@
 "use client";
 
 import { useFormContext, useWatch } from "react-hook-form";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import type { TransactionFormValues } from "@/components/drawer/AddTransactionForm/form-schema";
 import type { RecurringFormValues } from "@/components/settings/RecurringTransactionForm/form-schema";
 
@@ -18,24 +19,26 @@ export function TypeToggleField() {
       <button
         type="button"
         onClick={() => handleChange("expense")}
-        className={`rounded-xl py-2.5 text-sm font-semibold transition-all ${
+        className={`flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-semibold transition-all ${
           type === "expense"
             ? "bg-background text-foreground shadow"
             : "text-muted-foreground"
         }`}
       >
-        💸 Dépense
+        <TrendingDown className="h-4 w-4" />
+        Dépense
       </button>
       <button
         type="button"
         onClick={() => handleChange("income")}
-        className={`rounded-xl py-2.5 text-sm font-semibold transition-all ${
+        className={`flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-sm font-semibold transition-all ${
           type === "income"
             ? "bg-background text-foreground shadow"
             : "text-muted-foreground"
         }`}
       >
-        💰 Revenu
+        <TrendingUp className="h-4 w-4" />
+        Revenu
       </button>
     </div>
   );

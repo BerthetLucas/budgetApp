@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Trash2 } from "lucide-react";
-import { CATEGORY_EMOJI } from "@/constants/categories";
+import { Trash2, Folder } from "lucide-react";
+import { CATEGORY_ICON } from "@/constants/categories";
 import { TransactionRowProps } from "./types";
 import { TransactionDescription } from "./transactionDescription";
 import { TransactionAmount } from "./transaction-amount";
@@ -14,6 +14,7 @@ export function TransactionRow({
   onDelete,
 }: TransactionRowProps) {
   const { category, description, type, amount, id } = transaction;
+  const Icon = CATEGORY_ICON[category] ?? Folder;
 
   return (
     <motion.div
@@ -23,8 +24,8 @@ export function TransactionRow({
       transition={{ duration: 0.25, delay, ease: "easeOut" }}
       className="flex items-center gap-3 px-4 py-3.5"
     >
-      <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg">
-        {CATEGORY_EMOJI[category] ?? "📂"}
+      <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+        <Icon className="h-5 w-5" />
       </div>
       <TransactionDescription category={category} description={description} />
       <TransactionAmount type={type} amount={amount} />
