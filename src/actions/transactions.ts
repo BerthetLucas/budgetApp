@@ -29,7 +29,15 @@ export async function addTransaction(
   input: Omit<Transaction, "id" | "created_at">
 ) {
   const supabase = await createClient();
-  const { error } = await supabase.from("transactions").insert([input]);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw new Error("Utilisateur non authentifié");
+
+  const { error } = await supabase
+    .from("transactions")
+    .insert([{ ...input, user_id: user.id }]);
 
   if (error) {
     throw new Error(error.message);
