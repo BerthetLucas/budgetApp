@@ -14,9 +14,10 @@ import { DateField } from "./fields/date-field";
 
 interface TransactionFormProps {
   onSuccess: () => void;
+  customCategories?: string[];
 }
 
-export function TransactionForm({ onSuccess }: TransactionFormProps) {
+export function TransactionForm({ onSuccess, customCategories }: TransactionFormProps) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +47,7 @@ export function TransactionForm({ onSuccess }: TransactionFormProps) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <TypeToggleField />
         <AmountField />
-        <CategoryField />
+        <CategoryField customCategories={customCategories} />
         <DescriptionField />
         <DateField />
         {error ? <p className="text-destructive text-sm">{error}</p> : null}

@@ -11,7 +11,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors overflow-hidden relative w-9 h-9 flex items-center justify-center"
+      className="text-muted-foreground hover:text-foreground hover:bg-muted relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl p-2 transition-colors"
       aria-label="Changer le thème"
     >
       <AnimatePresence mode="wait" initial={false}>

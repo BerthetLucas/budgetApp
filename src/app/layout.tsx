@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <body
-        className={`${nunito.variable} ${spaceMono.variable} font-sans antialiased`}
+        className={`${nunito.variable} ${spaceMono.variable} bg-muted/30 font-sans antialiased`}
       >
         <ThemeProvider>
           {children}

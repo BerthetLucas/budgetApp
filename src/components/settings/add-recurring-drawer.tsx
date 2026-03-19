@@ -12,7 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { RecurringTransactionForm } from "@/components/settings/recurring-transaction-form/recurring-transaction-form";
 
-export function AddRecurringDrawer() {
+interface AddRecurringDrawerProps {
+  customCategories?: string[];
+}
+
+export function AddRecurringDrawer({ customCategories }: AddRecurringDrawerProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -28,7 +32,7 @@ export function AddRecurringDrawer() {
           <DrawerHeader className="px-0">
             <DrawerTitle>Nouvelle transaction récurrente</DrawerTitle>
           </DrawerHeader>
-          <RecurringTransactionForm onSuccess={() => setOpen(false)} />
+          <RecurringTransactionForm onSuccess={() => setOpen(false)} customCategories={customCategories} />
         </div>
       </DrawerContent>
     </Drawer>

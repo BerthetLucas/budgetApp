@@ -6,6 +6,7 @@ interface PageShellProps {
   title: string;
   children: ReactNode;
   footer?: ReactNode;
+  headerAction?: ReactNode;
   paddingBottom?: "pb-20" | "pb-24";
 }
 
@@ -14,19 +15,25 @@ export function PageShell({
   title,
   children,
   footer,
+  headerAction,
   paddingBottom = "pb-20",
 }: PageShellProps) {
   return (
-    <div className="bg-muted/30 min-h-screen">
-      <main className={`mx-auto max-w-md px-4 ${paddingBottom}`}>
-        <div className="flex items-start justify-between pt-10 pb-6">
+    <div className="min-h-screen">
+      <main
+        className={`mx-auto max-w-md px-4 md:max-w-2xl md:px-8 md:pb-10 ${paddingBottom}`}
+      >
+        <div className="flex items-start justify-between pt-10 pb-6 md:pt-8 md:pb-8">
           <div>
             <p className="text-muted-foreground mb-1 text-xs font-medium tracking-widest uppercase">
               {label}
             </p>
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            {headerAction}
+            <ThemeToggle />
+          </div>
         </div>
         {children}
       </main>

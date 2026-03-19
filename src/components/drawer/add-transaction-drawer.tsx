@@ -12,7 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { TransactionForm } from "@/components/drawer/add-transaction-form/transaction-form";
 
-export function AddTransactionDrawer() {
+interface AddTransactionDrawerProps {
+  customCategories?: string[];
+}
+
+export function AddTransactionDrawer({ customCategories }: AddTransactionDrawerProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -28,7 +32,7 @@ export function AddTransactionDrawer() {
           <DrawerHeader className="px-0">
             <DrawerTitle>Nouvelle transaction</DrawerTitle>
           </DrawerHeader>
-          <TransactionForm onSuccess={() => setOpen(false)} />
+          <TransactionForm onSuccess={() => setOpen(false)} customCategories={customCategories} />
         </div>
       </DrawerContent>
     </Drawer>

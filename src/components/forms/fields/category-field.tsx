@@ -9,11 +9,16 @@ import {
 } from "@/constants/categories";
 import { ChangeEvent } from "react";
 
-export function CategoryField() {
+interface CategoryFieldProps {
+  customCategories?: string[];
+}
+
+export function CategoryField({ customCategories = [] }: CategoryFieldProps) {
   const { setValue, formState, control } =
     useFormContext<TransactionFormValues | RecurringFormValues>();
   const type = useWatch({ control, name: "type" });
-  const categories = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+  const defaults = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+  const categories = [...defaults, ...customCategories.filter((c) => !defaults.includes(c as never))];
   const category = useWatch({ control, name: "category" });
 
   function handleCategoryChange(e: ChangeEvent<HTMLSelectElement>) {

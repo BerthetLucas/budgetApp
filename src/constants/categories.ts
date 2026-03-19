@@ -30,7 +30,10 @@ import {
   Pill,
   Smartphone,
   Folder,
+  Tag,
 } from "lucide-react";
+
+export { Tag as DEFAULT_CATEGORY_ICON };
 
 export const CATEGORY_ICON: Record<string, LucideIcon> = {
   Salaire: Briefcase,
