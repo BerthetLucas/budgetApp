@@ -15,8 +15,13 @@ export default async function Home() {
       label="Tableau de bord"
       title="Mes finances"
       paddingBottom="pb-24"
+      headerAction={
+        <div className="hidden md:block">
+          <AddTransactionDrawer customCategories={customCategories} />
+        </div>
+      }
       footer={
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2">
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 md:hidden">
           <AddTransactionDrawer customCategories={customCategories} />
         </div>
       }

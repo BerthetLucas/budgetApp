@@ -38,13 +38,15 @@ export default function SettingsPage() {
   return (
     <PageShell label="Configuration" title="Réglages">
       <div className="flex flex-col gap-10">
-        <Suspense fallback={<SettingsSkeleton />}>
-          <SettingsContent />
-        </Suspense>
-        <Suspense fallback={<SettingsSkeleton />}>
-          <CategoryContent />
-        </Suspense>
-        <form action={signOut} className="mt-8">
+        <div className="flex flex-col gap-10 md:grid md:grid-cols-2 md:items-start md:gap-8">
+          <Suspense fallback={<SettingsSkeleton />}>
+            <SettingsContent />
+          </Suspense>
+          <Suspense fallback={<SettingsSkeleton />}>
+            <CategoryContent />
+          </Suspense>
+        </div>
+        <form action={signOut} className="md:max-w-xs">
           <Button
             type="submit"
             variant="destructive"
