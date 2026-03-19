@@ -2,7 +2,8 @@
 
 import { useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
-import { PasswordInput } from "@/components/auth/PasswordInput";
+import { PasswordInput } from "@/components/auth/password-input";
+import { FieldError } from "@/components/ui/field-error";
 
 interface PasswordFieldProps {
   mode: "login" | "signup";
@@ -31,9 +32,7 @@ export function PasswordField({ mode }: PasswordFieldProps) {
           autoComplete={mode === "login" ? "current-password" : "new-password"}
           {...register("password")}
         />
-        {passwordErrors?.message && (
-          <p className="text-destructive text-sm">{passwordErrors.message}</p>
-        )}
+        <FieldError message={passwordErrors?.message} />
       </div>
 
       {mode === "signup" && (
@@ -45,9 +44,7 @@ export function PasswordField({ mode }: PasswordFieldProps) {
             autoComplete="new-password"
             {...register("confirmPassword")}
           />
-          {confirmErrors?.message && (
-            <p className="text-destructive text-sm">{confirmErrors.message}</p>
-          )}
+          <FieldError message={confirmErrors?.message} />
         </div>
       )}
     </div>

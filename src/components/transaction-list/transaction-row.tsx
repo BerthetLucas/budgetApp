@@ -5,7 +5,7 @@ import { slideRow } from "@/lib/motion";
 import { Trash2, Folder } from "lucide-react";
 import { CATEGORY_ICON } from "@/constants/categories";
 import { TransactionRowProps } from "./types";
-import { TransactionDescription } from "./transactionDescription";
+import { TransactionDescription } from "./transaction-description";
 import { TransactionAmount } from "./transaction-amount";
 
 export function TransactionRow({

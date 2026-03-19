@@ -5,8 +5,8 @@ import { FormProvider } from "react-hook-form";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { signIn } from "@/actions/auth";
-import { AuthEmailField } from "@/components/auth/AuthEmailField";
-import { PasswordField } from "@/components/auth/PasswordField";
+import { AuthEmailField } from "@/components/auth/auth-email-field";
+import { PasswordField } from "@/components/auth/password-field";
 import { useLoginForm } from "./useLoginForm";
 import { LoginFormValues } from "./form-schema";
 

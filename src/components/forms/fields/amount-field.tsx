@@ -1,8 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormContext } from "react-hook-form";
-import type { TransactionFormValues } from "@/components/drawer/AddTransactionForm/form-schema";
-import type { RecurringFormValues } from "@/components/settings/RecurringTransactionForm/form-schema";
+import { FieldError } from "@/components/ui/field-error";
+import type { TransactionFormValues } from "@/components/drawer/add-transaction-form/form-schema";
+import type { RecurringFormValues } from "@/components/settings/recurring-transaction-form/form-schema";
 
 export function AmountField() {
   const { register, formState } = useFormContext<TransactionFormValues | RecurringFormValues>();
@@ -18,11 +19,7 @@ export function AmountField() {
         className="h-14 rounded-xl text-center text-2xl font-bold"
         {...register("amount")}
       />
-      {formState.errors.amount ? (
-        <p className="text-destructive text-xs">
-          {formState.errors.amount.message}
-        </p>
-      ) : null}
+      <FieldError message={formState.errors.amount?.message} />
     </div>
   );
 }

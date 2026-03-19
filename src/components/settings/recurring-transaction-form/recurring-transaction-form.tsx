@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { addRecurringTransaction } from "@/actions/recurring";
 import { RecurringFormValues } from "./form-schema";
 import { useRecurringTransactionForm } from "./useRecurringTransactionForm";
-import { TypeToggleField } from "@/components/forms/fields/TypeToggleField";
-import { AmountField } from "@/components/forms/fields/AmountField";
-import { CategoryField } from "@/components/forms/fields/CategoryField";
-import { DescriptionAndDayField } from "./fields/DescriptionAndDayField";
+import { TypeToggleField } from "@/components/forms/fields/type-toggle-field";
+import { AmountField } from "@/components/forms/fields/amount-field";
+import { CategoryField } from "@/components/forms/fields/category-field";
+import { DescriptionAndDayField } from "./fields/description-and-day-field";
 
 interface RecurringTransactionFormProps {
   onSuccess: () => void;

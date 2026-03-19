@@ -10,7 +10,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { RecurringTransactionForm } from "@/components/settings/RecurringTransactionForm/recurring-transaction-form";
+import { RecurringTransactionForm } from "@/components/settings/recurring-transaction-form/recurring-transaction-form";
 
 export function AddRecurringDrawer() {
   const [open, setOpen] = useState(false);

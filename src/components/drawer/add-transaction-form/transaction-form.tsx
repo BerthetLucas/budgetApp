@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 import { addTransaction } from "@/actions/transactions";
 import { TransactionFormValues } from "./form-schema";
 import { useTransactionForm } from "./useTransactionForm";
-import { TypeToggleField } from "@/components/forms/fields/TypeToggleField";
-import { AmountField } from "@/components/forms/fields/AmountField";
-import { CategoryField } from "@/components/forms/fields/CategoryField";
-import { DescriptionField } from "./fields/DescriptionField";
-import { DateField } from "./fields/DateField";
+import { TypeToggleField } from "@/components/forms/fields/type-toggle-field";
+import { AmountField } from "@/components/forms/fields/amount-field";
+import { CategoryField } from "@/components/forms/fields/category-field";
+import { DescriptionField } from "./fields/description-field";
+import { DateField } from "./fields/date-field";
 
 interface TransactionFormProps {
   onSuccess: () => void;

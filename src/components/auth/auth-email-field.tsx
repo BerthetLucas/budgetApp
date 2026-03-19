@@ -3,6 +3,7 @@
 import { useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FieldError } from "@/components/ui/field-error";
 
 type WithEmail = { email: string };
 
@@ -23,9 +24,7 @@ export function AuthEmailField() {
         className="h-12 rounded-xl"
         {...register("email")}
       />
-      {errors.email && (
-        <p className="text-destructive text-sm">{errors.email.message}</p>
-      )}
+      <FieldError message={errors.email?.message} />
     </div>
   );
 }

@@ -2,8 +2,8 @@
 
 import { useFormContext, useWatch } from "react-hook-form";
 import { TrendingDown, TrendingUp } from "lucide-react";
-import type { TransactionFormValues } from "@/components/drawer/AddTransactionForm/form-schema";
-import type { RecurringFormValues } from "@/components/settings/RecurringTransactionForm/form-schema";
+import type { TransactionFormValues } from "@/components/drawer/add-transaction-form/form-schema";
+import type { RecurringFormValues } from "@/components/settings/recurring-transaction-form/form-schema";
 
 export function TypeToggleField() {
   const { setValue, control } = useFormContext<TransactionFormValues | RecurringFormValues>();

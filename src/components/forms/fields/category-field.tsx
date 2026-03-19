@@ -1,7 +1,8 @@
 import { Label } from "@/components/ui/label";
 import { useFormContext, useWatch } from "react-hook-form";
-import type { TransactionFormValues } from "@/components/drawer/AddTransactionForm/form-schema";
-import type { RecurringFormValues } from "@/components/settings/RecurringTransactionForm/form-schema";
+import { FieldError } from "@/components/ui/field-error";
+import type { TransactionFormValues } from "@/components/drawer/add-transaction-form/form-schema";
+import type { RecurringFormValues } from "@/components/settings/recurring-transaction-form/form-schema";
 import {
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
@@ -36,11 +37,7 @@ export function CategoryField() {
           </option>
         ))}
       </select>
-      {formState.errors.category ? (
-        <p className="text-destructive text-xs">
-          {formState.errors.category.message}
-        </p>
-      ) : null}
+      <FieldError message={formState.errors.category?.message} />
     </div>
   );
 }
