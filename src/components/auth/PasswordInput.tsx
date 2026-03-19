@@ -15,7 +15,7 @@ export function PasswordInput({ className, ...props }: PasswordInputProps) {
     <div className="relative">
       <Input
         type={show ? "text" : "password"}
-        className={cn("pr-10", className)}
+        className={cn("h-12 rounded-xl pr-10", className)}
         {...props}
       />
       <Button
@@ -23,8 +23,8 @@ export function PasswordInput({ className, ...props }: PasswordInputProps) {
         variant="ghost"
         size="icon"
         className="absolute right-0 top-0 h-full w-10 text-muted-foreground hover:text-foreground"
+        aria-label={show ? "Masquer le mot de passe" : "Afficher le mot de passe"}
         onClick={() => setShow((v) => !v)}
-        tabIndex={-1}
       >
         {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
       </Button>

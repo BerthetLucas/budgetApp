@@ -6,8 +6,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { signIn } from "@/actions/auth";
 import { AuthEmailField } from "@/components/auth/AuthEmailField";
+import { PasswordField } from "@/components/auth/PasswordField";
 import { useLoginForm } from "./useLoginForm";
-import { PasswordField } from "./fields/PasswordField";
 import { LoginFormValues } from "./form-schema";
 
 export function LoginForm() {
@@ -29,8 +29,8 @@ export function LoginForm() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1">
+    <div className="space-y-8">
+      <div className="space-y-1.5">
         <h1 className="text-3xl font-bold tracking-tight">Connexion</h1>
         <p className="text-muted-foreground text-sm">
           Pas encore de compte ?{" "}
@@ -42,19 +42,21 @@ export function LoginForm() {
           </Link>
         </p>
       </div>
+
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <AuthEmailField />
-          <PasswordField />
+          <PasswordField mode="login" />
+
           {error && (
-            <p className="text-destructive bg-destructive/10 rounded-lg px-3 py-2 text-sm">
+            <p className="text-destructive bg-destructive/10 rounded-xl px-4 py-3 text-sm">
               {error}
             </p>
           )}
+
           <Button
             type="submit"
-            className="mt-2 w-full"
-            size="lg"
+            className="mt-2 h-12 w-full rounded-xl text-base font-semibold"
             disabled={isPending}
           >
             {isPending ? "Connexion…" : "Se connecter"}

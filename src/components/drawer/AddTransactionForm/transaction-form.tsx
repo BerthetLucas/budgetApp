@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { addTransaction } from "@/actions/transactions";
@@ -10,6 +10,7 @@ import { TypeToggleField } from "@/components/forms/fields/TypeToggleField";
 import { AmountField } from "@/components/forms/fields/AmountField";
 import { CategoryField } from "@/components/forms/fields/CategoryField";
 import { DescriptionField } from "./fields/DescriptionField";
+import { DateField } from "./fields/DateField";
 
 interface TransactionFormProps {
   onSuccess: () => void;
@@ -17,10 +18,12 @@ interface TransactionFormProps {
 
 export function TransactionForm({ onSuccess }: TransactionFormProps) {
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   const form = useTransactionForm();
 
   function onSubmit(values: TransactionFormValues) {
+    setError(null);
     startTransition(async () => {
       try {
         await addTransaction({
@@ -32,8 +35,8 @@ export function TransactionForm({ onSuccess }: TransactionFormProps) {
         });
         form.reset();
         onSuccess();
-      } catch (err) {
-        console.error(err);
+      } catch {
+        setError("Une erreur est survenue, veuillez réessayer.");
       }
     });
   }
@@ -45,6 +48,8 @@ export function TransactionForm({ onSuccess }: TransactionFormProps) {
         <AmountField />
         <CategoryField />
         <DescriptionField />
+        <DateField />
+        {error ? <p className="text-destructive text-sm">{error}</p> : null}
         <Button
           type="submit"
           className="h-12 w-full rounded-xl text-base font-semibold"

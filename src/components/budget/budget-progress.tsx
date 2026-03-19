@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { fadeUp } from "@/lib/motion";
 
 interface BudgetProgressProps {
   progressPercent: number;
@@ -10,9 +11,7 @@ interface BudgetProgressProps {
 export function BudgetProgress({ progressPercent, lastDay }: BudgetProgressProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+      {...fadeUp(0.2)}
       className="bg-card rounded-3xl p-5"
     >
       <div className="mb-3 flex items-center justify-between">

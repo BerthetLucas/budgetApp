@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { slideRow } from "@/lib/motion";
 import { Trash2, Folder } from "lucide-react";
 import { CATEGORY_ICON } from "@/constants/categories";
 import { TransactionRowProps } from "./types";
@@ -18,10 +19,7 @@ export function TransactionRow({
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -8 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 8, height: 0 }}
-      transition={{ duration: 0.25, delay, ease: "easeOut" }}
+      {...slideRow(delay)}
       className="flex items-center gap-3 px-4 py-3.5"
     >
       <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">

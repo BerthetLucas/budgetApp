@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
+import { fadeUpSm } from "@/lib/motion";
 import { TransactionRow } from "./transaction-row";
 import { TransactionGroupProps } from "./types";
 
@@ -18,11 +19,7 @@ export function TransactionGroup({
   });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: baseDelay, ease: "easeOut" }}
-    >
+    <motion.div {...fadeUpSm(baseDelay)}>
       <p className="text-muted-foreground mb-2 px-1 text-xs font-semibold tracking-wide uppercase">
         {label}
       </p>

@@ -9,9 +9,9 @@ import {
 import { ChangeEvent } from "react";
 
 export function CategoryField() {
-  const { setValue, formState, getValues, control } =
+  const { setValue, formState, control } =
     useFormContext<TransactionFormValues | RecurringFormValues>();
-  const type = getValues("type");
+  const type = useWatch({ control, name: "type" });
   const categories = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
   const category = useWatch({ control, name: "category" });
 

@@ -20,6 +20,7 @@ export function AuthEmailField() {
         type="email"
         placeholder="vous@exemple.com"
         autoComplete="email"
+        className="h-12 rounded-xl"
         {...register("email")}
       />
       {errors.email && (

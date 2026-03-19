@@ -6,8 +6,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { signUp } from "@/actions/auth";
 import { AuthEmailField } from "@/components/auth/AuthEmailField";
+import { PasswordField } from "@/components/auth/PasswordField";
 import { useSignupForm } from "./useSignupForm";
-import { PasswordField } from "./fields/PasswordField";
 import { SignupFormValues } from "./form-schema";
 
 export function SignupForm() {
@@ -31,8 +31,8 @@ export function SignupForm() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1">
+    <div className="space-y-8">
+      <div className="space-y-1.5">
         <h1 className="text-3xl font-bold tracking-tight">Créer un compte</h1>
         <p className="text-muted-foreground text-sm">
           Déjà un compte ?{" "}
@@ -44,21 +44,28 @@ export function SignupForm() {
           </Link>
         </p>
       </div>
+
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <AuthEmailField />
-          <PasswordField />
+          <PasswordField mode="signup" />
+
           {error && (
-            <p className="text-destructive text-sm rounded-lg bg-destructive/10 px-3 py-2">
+            <p className="text-destructive bg-destructive/10 rounded-xl px-4 py-3 text-sm">
               {error}
             </p>
           )}
           {success && (
-            <p className="text-sm rounded-lg bg-green-500/10 text-green-600 dark:text-green-400 px-3 py-2">
+            <p className="rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-600 dark:text-green-400">
               Compte créé ! Vérifiez votre email puis connectez-vous.
             </p>
           )}
-          <Button type="submit" className="w-full mt-2" size="lg" disabled={isPending}>
+
+          <Button
+            type="submit"
+            className="mt-2 h-12 w-full rounded-xl text-base font-semibold"
+            disabled={isPending}
+          >
             {isPending ? "Création…" : "Créer mon compte"}
           </Button>
         </form>

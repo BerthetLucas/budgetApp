@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { fadeUp } from "@/lib/motion";
 import { formatCurrency } from "@/lib/utils";
 
 interface BudgetSummaryCardProps {
@@ -18,9 +19,7 @@ export function BudgetSummaryCard({
 }: BudgetSummaryCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      {...fadeUp()}
       className="bg-foreground text-background rounded-3xl p-6 shadow-lg"
     >
       <p className="mb-2 text-sm font-medium opacity-60">Solde restant ce mois</p>
