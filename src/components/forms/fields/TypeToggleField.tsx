@@ -1,10 +1,11 @@
 "use client";
 
 import { useFormContext, useWatch } from "react-hook-form";
-import { FormValues } from "../form-schema";
+import type { TransactionFormValues } from "@/components/drawer/AddTransactionForm/form-schema";
+import type { RecurringFormValues } from "@/components/settings/RecurringTransactionForm/form-schema";
 
 export function TypeToggleField() {
-  const { setValue, control } = useFormContext<FormValues>();
+  const { setValue, control } = useFormContext<TransactionFormValues | RecurringFormValues>();
   const type = useWatch({ control, name: "type" });
 
   function handleChange(newType: "income" | "expense") {

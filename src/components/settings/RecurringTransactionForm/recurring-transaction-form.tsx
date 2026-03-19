@@ -3,32 +3,33 @@
 import { useTransition } from "react";
 import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { addTransaction } from "@/actions/transactions";
-import { TransactionFormValues } from "./form-schema";
-import { useTransactionForm } from "./useTransactionForm";
+import { addRecurringTransaction } from "@/actions/recurring";
+import { RecurringFormValues } from "./form-schema";
+import { useRecurringTransactionForm } from "./useRecurringTransactionForm";
 import { TypeToggleField } from "@/components/forms/fields/TypeToggleField";
 import { AmountField } from "@/components/forms/fields/AmountField";
 import { CategoryField } from "@/components/forms/fields/CategoryField";
-import { DescriptionField } from "./fields/DescriptionField";
+import { DescriptionAndDayField } from "./fields/DescriptionAndDayField";
 
-interface TransactionFormProps {
+interface RecurringTransactionFormProps {
   onSuccess: () => void;
 }
 
-export function TransactionForm({ onSuccess }: TransactionFormProps) {
+export function RecurringTransactionForm({
+  onSuccess,
+}: RecurringTransactionFormProps) {
   const [isPending, startTransition] = useTransition();
+  const form = useRecurringTransactionForm();
 
-  const form = useTransactionForm();
-
-  function onSubmit(values: TransactionFormValues) {
+  function onSubmit(values: RecurringFormValues) {
     startTransition(async () => {
       try {
-        await addTransaction({
+        await addRecurringTransaction({
           type: values.type,
           category: values.category,
           amount: values.amount,
           description: values.description ?? null,
-          date: values.date,
+          day_of_month: values.day_of_month,
         });
         form.reset();
         onSuccess();
@@ -44,7 +45,7 @@ export function TransactionForm({ onSuccess }: TransactionFormProps) {
         <TypeToggleField />
         <AmountField />
         <CategoryField />
-        <DescriptionField />
+        <DescriptionAndDayField />
         <Button
           type="submit"
           className="h-12 w-full rounded-xl text-base font-semibold"

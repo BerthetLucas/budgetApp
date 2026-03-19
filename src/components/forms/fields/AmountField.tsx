@@ -1,10 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormContext } from "react-hook-form";
-import { FormValues } from "../form-schema";
+import type { TransactionFormValues } from "@/components/drawer/AddTransactionForm/form-schema";
+import type { RecurringFormValues } from "@/components/settings/RecurringTransactionForm/form-schema";
 
 export function AmountField() {
-  const { register, formState } = useFormContext<FormValues>();
+  const { register, formState } = useFormContext<TransactionFormValues | RecurringFormValues>();
 
   return (
     <div className="space-y-1.5">

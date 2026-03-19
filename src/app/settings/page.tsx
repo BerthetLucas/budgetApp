@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { RecurringTransactionSettings } from "@/components/settings/recurring-transaction-settings";
+import { getRecurringTransactions } from "@/actions/recurring";
 
 export const metadata: Metadata = {
-  title: "Statistiques",
-  description: "Analyse de vos dépenses et revenus",
+  title: "Réglages",
+  description: "Configuration de vos transactions récurrentes",
 };
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const recurring = await getRecurringTransactions();
+
   return (
     <div className="bg-muted/30 min-h-screen">
       <main className="mx-auto max-w-md px-4 pb-20">
@@ -24,7 +28,9 @@ export default function SettingsPage() {
           fallback={
             <div className="bg-foreground/10 h-80 animate-pulse rounded-3xl" />
           }
-        ></Suspense>
+        >
+          <RecurringTransactionSettings initialData={recurring} />
+        </Suspense>
       </main>
     </div>
   );
