@@ -79,8 +79,8 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value: number) => [
-                      `${formatCurrency(value)} €`,
+                    formatter={(value) => [
+                      `${formatCurrency(Number(value))} €`,
                       "Dépenses",
                     ]}
                     contentStyle={{
