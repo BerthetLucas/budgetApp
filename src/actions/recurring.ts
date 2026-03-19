@@ -32,9 +32,15 @@ export async function addRecurringTransaction(
   input: Omit<RecurringTransaction, "id" | "created_at">
 ) {
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw new Error("Utilisateur non authentifié");
+
   const { error } = await supabase
     .from("recurring_transactions")
-    .insert([input]);
+    .insert([{ ...input, user_id: user.id }]);
 
   if (error) {
     throw new Error(error.message);
@@ -64,6 +70,7 @@ export async function checkAndApplyRecurringTransactions() {
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
 
+  // Early return before any user fetch — most common path when already applied this month
   const { data: existing } = await supabase
     .from("recurring_applied_months")
     .select("id")
@@ -72,6 +79,12 @@ export async function checkAndApplyRecurringTransactions() {
     .maybeSingle();
 
   if (existing) return;
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw new Error("Utilisateur non authentifié");
 
   const { data: recurring, error: fetchError } = await supabase
     .from("recurring_transactions")
@@ -94,6 +107,7 @@ export async function checkAndApplyRecurringTransactions() {
       amount: r.amount,
       description: r.description,
       date,
+      user_id: user.id,
     };
   });
 
@@ -108,7 +122,7 @@ export async function checkAndApplyRecurringTransactions() {
 
   await supabase
     .from("recurring_applied_months")
-    .insert([{ year, month }]);
+    .insert([{ year, month, user_id: user.id }]);
 
   revalidatePath("/");
   revalidatePath("/stats");

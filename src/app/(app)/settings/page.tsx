@@ -3,6 +3,9 @@ import { Suspense } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { RecurringTransactionSettings } from "@/components/settings/recurring-transaction-settings";
 import { getRecurringTransactions } from "@/actions/recurring";
+import { signOut } from "@/actions/auth";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Réglages",
@@ -31,6 +34,16 @@ export default async function SettingsPage() {
         >
           <RecurringTransactionSettings initialData={recurring} />
         </Suspense>
+        <form action={signOut} className="mt-8">
+          <Button
+            type="submit"
+            variant="outline"
+            className="w-full gap-2 text-destructive border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
+          >
+            <LogOut className="h-4 w-4" />
+            Se déconnecter
+          </Button>
+        </form>
       </main>
     </div>
   );
