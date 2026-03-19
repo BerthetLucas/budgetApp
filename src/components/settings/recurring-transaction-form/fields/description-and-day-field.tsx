@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormContext } from "react-hook-form";
-import { FormValues } from "../form-schema";
+import { RecurringFormValues as FormValues } from "../form-schema";
 
 export function DescriptionAndDayField() {
   const { register, formState } = useFormContext<FormValues>();
