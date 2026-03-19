@@ -5,7 +5,9 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { Transaction } from "@/types";
 
-const getTransactionsCached = cache(async (): Promise<Transaction[]> => {
+const REVALIDATE_PATHS = ["/", "/stats"] as const;
+
+export const getTransactions = cache(async (): Promise<Transaction[]> => {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("transactions")
@@ -13,17 +15,10 @@ const getTransactionsCached = cache(async (): Promise<Transaction[]> => {
     .order("date", { ascending: false })
     .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error("Error fetching transactions:", error);
-    return [];
-  }
+  if (error) throw new Error(error.message);
 
   return data ?? [];
 });
-
-export async function getTransactions(): Promise<Transaction[]> {
-  return getTransactionsCached();
-}
 
 export async function addTransaction(
   input: Omit<Transaction, "id" | "created_at">
@@ -39,22 +34,16 @@ export async function addTransaction(
     .from("transactions")
     .insert([{ ...input, user_id: user.id }]);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
-  revalidatePath("/");
-  revalidatePath("/stats");
+  REVALIDATE_PATHS.forEach((path) => revalidatePath(path));
 }
 
 export async function deleteTransaction(id: string) {
   const supabase = await createClient();
   const { error } = await supabase.from("transactions").delete().eq("id", id);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
-  revalidatePath("/");
-  revalidatePath("/stats");
+  REVALIDATE_PATHS.forEach((path) => revalidatePath(path));
 }

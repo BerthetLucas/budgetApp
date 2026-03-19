@@ -17,11 +17,11 @@ export function PageShell({
   paddingBottom = "pb-20",
 }: PageShellProps) {
   return (
-    <div className="min-h-screen bg-muted/30">
-      <main className={`max-w-md mx-auto px-4 ${paddingBottom}`}>
-        <div className="pt-10 pb-6 flex items-start justify-between">
+    <div className="bg-muted/30 min-h-screen">
+      <main className={`mx-auto max-w-md px-4 ${paddingBottom}`}>
+        <div className="flex items-start justify-between pt-10 pb-6">
           <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-1">
+            <p className="text-muted-foreground mb-1 text-xs font-medium tracking-widest uppercase">
               {label}
             </p>
             <h1 className="text-2xl font-bold tracking-tight">{title}</h1>

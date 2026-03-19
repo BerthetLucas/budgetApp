@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { RecurringTransaction } from "@/types";
 
-const getRecurringTransactionsCached = cache(
+export const getRecurringTransactions = cache(
   async (): Promise<RecurringTransaction[]> => {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -13,20 +13,11 @@ const getRecurringTransactionsCached = cache(
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (error) {
-      console.error("Error fetching recurring transactions:", error);
-      return [];
-    }
+    if (error) throw new Error(error.message);
 
     return data ?? [];
   }
 );
-
-export async function getRecurringTransactions(): Promise<
-  RecurringTransaction[]
-> {
-  return getRecurringTransactionsCached();
-}
 
 export async function addRecurringTransaction(
   input: Omit<RecurringTransaction, "id" | "created_at">
@@ -42,9 +33,7 @@ export async function addRecurringTransaction(
     .from("recurring_transactions")
     .insert([{ ...input, user_id: user.id }]);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
   revalidatePath("/settings");
 }
@@ -56,9 +45,7 @@ export async function deleteRecurringTransaction(id: string) {
     .delete()
     .eq("id", id);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
   revalidatePath("/settings");
 }
@@ -70,55 +57,23 @@ export async function checkAndApplyRecurringTransactions() {
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
 
-  // Early return before any user fetch — most common path when already applied this month
-  const { data: existing } = await supabase
-    .from("recurring_applied_months")
-    .select("id")
-    .eq("year", year)
-    .eq("month", month)
-    .maybeSingle();
-
-  if (existing) return;
+  const alreadyApplied = await hasBeenAppliedThisMonth(supabase, year, month);
+  if (alreadyApplied) return;
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
   if (!user) throw new Error("Utilisateur non authentifié");
 
-  const { data: recurring, error: fetchError } = await supabase
-    .from("recurring_transactions")
-    .select("*");
+  const recurring = await fetchRecurringTransactions(supabase);
+  if (recurring.length === 0) return;
 
-  if (fetchError) {
-    console.error("Error fetching recurring transactions:", fetchError);
-    return;
-  }
-
-  if (!recurring || recurring.length === 0) return;
-
-  const lastDayOfMonth = new Date(year, month, 0).getDate();
-  const transactions = (recurring as RecurringTransaction[]).map((r) => {
-    const day = Math.min(r.day_of_month, lastDayOfMonth);
-    const date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    return {
-      type: r.type,
-      category: r.category,
-      amount: r.amount,
-      description: r.description,
-      date,
-      user_id: user.id,
-    };
-  });
+  const transactions = buildTransactionsForMonth(recurring, user.id, year, month);
 
   const { error: insertError } = await supabase
     .from("transactions")
     .insert(transactions);
-
-  if (insertError) {
-    console.error("Error inserting recurring transactions:", insertError);
-    return;
-  }
+  if (insertError) throw new Error(insertError.message);
 
   await supabase
     .from("recurring_applied_months")
@@ -126,4 +81,51 @@ export async function checkAndApplyRecurringTransactions() {
 
   revalidatePath("/");
   revalidatePath("/stats");
+}
+
+// ─── Helpers privés ───────────────────────────────────────────────────────────
+
+async function hasBeenAppliedThisMonth(
+  supabase: Awaited<ReturnType<typeof import("@/lib/supabase/server").createClient>>,
+  year: number,
+  month: number
+): Promise<boolean> {
+  const { data } = await supabase
+    .from("recurring_applied_months")
+    .select("id")
+    .eq("year", year)
+    .eq("month", month)
+    .maybeSingle();
+  return !!data;
+}
+
+async function fetchRecurringTransactions(
+  supabase: Awaited<ReturnType<typeof import("@/lib/supabase/server").createClient>>
+): Promise<RecurringTransaction[]> {
+  const { data, error } = await supabase
+    .from("recurring_transactions")
+    .select("*");
+  if (error) throw new Error(error.message);
+  return data ?? [];
+}
+
+function buildTransactionsForMonth(
+  recurring: RecurringTransaction[],
+  userId: string,
+  year: number,
+  month: number
+) {
+  const lastDay = new Date(year, month, 0).getDate();
+  return recurring.map((r) => {
+    const day = Math.min(r.day_of_month, lastDay);
+    const date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return {
+      type: r.type,
+      category: r.category,
+      amount: r.amount,
+      description: r.description,
+      date,
+      user_id: userId,
+    };
+  });
 }

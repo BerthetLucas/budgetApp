@@ -1,107 +1,43 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { ChevronLeft, ChevronRight, BarChart2, Folder } from "lucide-react";
+import { BarChart2 } from "lucide-react";
 import { Transaction } from "@/types";
-import { CATEGORY_ICON } from "@/constants/categories";
-import { formatCurrency, cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
+import { useMonthNavigation } from "@/components/stats/use-month-navigation";
+import { useExpensesChartData } from "@/components/stats/use-expenses-chart-data";
+import { MonthNavigator } from "@/components/stats/month-navigator";
+import { CategoryBreakdown } from "@/components/stats/category-breakdown";
 
 interface ExpensesChartProps {
   transactions: Transaction[];
 }
 
-const CHART_COLORS = [
-  "var(--chart-1)",
-  "var(--chart-2)",
-  "var(--chart-3)",
-  "var(--chart-4)",
-  "var(--chart-5)",
-] as const;
-
-function formatMonthLabel(year: number, month: number): string {
-  const label = new Date(year, month, 1).toLocaleDateString("fr-FR", {
-    month: "long",
-    year: "numeric",
-  });
-  return label.charAt(0).toUpperCase() + label.slice(1);
-}
-
 export function ExpensesChart({ transactions }: ExpensesChartProps) {
-  const now = new Date();
-  const [selectedYear, setSelectedYear] = useState(now.getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(now.getMonth());
+  const {
+    selectedYear,
+    selectedMonth,
+    isCurrentMonth,
+    goToPrevMonth,
+    goToNextMonth,
+  } = useMonthNavigation();
 
-  const isCurrentMonth =
-    selectedYear === now.getFullYear() && selectedMonth === now.getMonth();
-
-  function goToPrevMonth() {
-    if (selectedMonth === 0) {
-      setSelectedMonth(11);
-      setSelectedYear((y) => y - 1);
-    } else {
-      setSelectedMonth((m) => m - 1);
-    }
-  }
-
-  function goToNextMonth() {
-    if (isCurrentMonth) return;
-    if (selectedMonth === 11) {
-      setSelectedMonth(0);
-      setSelectedYear((y) => y + 1);
-    } else {
-      setSelectedMonth((m) => m + 1);
-    }
-  }
-
-  const monthStr = String(selectedMonth + 1).padStart(2, "0");
-  const prefix = `${selectedYear}-${monthStr}`;
-  const grouped: Record<string, number> = {};
-  for (const tx of transactions) {
-    if (tx.type !== "expense") continue;
-    if (!tx.date.startsWith(prefix)) continue;
-    grouped[tx.category] = (grouped[tx.category] ?? 0) + tx.amount;
-  }
-  const chartData = Object.entries(grouped)
-    .sort(([, a], [, b]) => b - a)
-    .map(([category, value], index) => ({
-      name: category,
-      value,
-      fill: CHART_COLORS[index % CHART_COLORS.length],
-      icon: CATEGORY_ICON[category] ?? Folder,
-    }));
-
-  const totalExpenses = chartData.reduce((sum, d) => sum + d.value, 0);
+  const { chartData, totalExpenses } = useExpensesChartData(
+    transactions,
+    selectedYear,
+    selectedMonth
+  );
 
   return (
     <div className="space-y-6">
-      {/* Month navigation */}
-      <div className="flex items-center justify-between">
-        <button
-          onClick={goToPrevMonth}
-          className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl p-2 transition-colors"
-          aria-label="Mois précédent"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <h2 className="text-base font-semibold tracking-tight">
-          {formatMonthLabel(selectedYear, selectedMonth)}
-        </h2>
-        <button
-          onClick={goToNextMonth}
-          disabled={isCurrentMonth}
-          className={cn(
-            "rounded-xl p-2 transition-colors",
-            isCurrentMonth
-              ? "text-muted-foreground/30 cursor-not-allowed"
-              : "text-muted-foreground hover:text-foreground hover:bg-muted"
-          )}
-          aria-label="Mois suivant"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      </div>
+      <MonthNavigator
+        year={selectedYear}
+        month={selectedMonth}
+        isCurrentMonth={isCurrentMonth}
+        onPrev={goToPrevMonth}
+        onNext={goToNextMonth}
+      />
 
       <AnimatePresence mode="wait">
         {chartData.length === 0 ? (
@@ -125,7 +61,6 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
             exit={{ opacity: 0 }}
             className="space-y-6"
           >
-            {/* Donut chart */}
             <div className="relative">
               <ResponsiveContainer width="100%" height={240}>
                 <PieChart>
@@ -159,7 +94,6 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
                   />
                 </PieChart>
               </ResponsiveContainer>
-              {/* Center label */}
               <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
                 <p className="text-muted-foreground text-xs font-medium">
                   Total
@@ -170,48 +104,7 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
               </div>
             </div>
 
-            {/* Category breakdown */}
-            <div className="bg-background divide-y overflow-hidden rounded-2xl border shadow-sm">
-              {chartData.map((entry, index) => {
-                const pct =
-                  totalExpenses > 0
-                    ? Math.round((entry.value / totalExpenses) * 100)
-                    : 0;
-                const EntryIcon = entry.icon;
-                return (
-                  <motion.div
-                    key={entry.name}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.25,
-                      delay: index * 0.05,
-                      ease: "easeOut",
-                    }}
-                    className="flex items-center gap-3 px-4 py-3.5"
-                  >
-                    <span
-                      className="h-2.5 w-2.5 shrink-0 rounded-full"
-                      style={{ background: entry.fill }}
-                    />
-                    <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
-                      <EntryIcon className="h-5 w-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm leading-tight font-medium">
-                        {entry.name}
-                      </p>
-                      <p className="text-muted-foreground mt-0.5 text-xs">
-                        {pct}% du total
-                      </p>
-                    </div>
-                    <span className="text-sm font-bold tabular-nums">
-                      {formatCurrency(entry.value)} €
-                    </span>
-                  </motion.div>
-                );
-              })}
-            </div>
+            <CategoryBreakdown data={chartData} total={totalExpenses} />
           </motion.div>
         )}
       </AnimatePresence>

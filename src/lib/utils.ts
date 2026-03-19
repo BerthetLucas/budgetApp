@@ -11,3 +11,11 @@ export function formatCurrency(amount: number): string {
     maximumFractionDigits: 2,
   });
 }
+
+export function formatMonthLabel(year: number, month: number): string {
+  const label = new Date(year, month, 1).toLocaleDateString("fr-FR", {
+    month: "long",
+    year: "numeric",
+  });
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}

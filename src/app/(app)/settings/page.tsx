@@ -27,8 +27,8 @@ export default function SettingsPage() {
       <form action={signOut} className="mt-8">
         <Button
           type="submit"
-          variant="outline"
-          className="w-full gap-2 text-destructive border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
+          variant="destructive"
+          className="h-12 w-full gap-2 rounded-xl text-base font-semibold"
         >
           <LogOut className="h-4 w-4" />
           Se déconnecter
