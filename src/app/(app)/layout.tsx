@@ -6,7 +6,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <SideNav />
-      <div className="md:px-16">{children}</div>
+      <div className="md:pl-56">{children}</div>
       <BottomNav />
     </>
   );

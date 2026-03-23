@@ -31,14 +31,14 @@ export function SignupForm() {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-1.5">
-        <h1 className="text-3xl font-bold tracking-tight">Créer un compte</h1>
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-xl font-bold tracking-tight">Créer un compte</h1>
         <p className="text-muted-foreground text-sm">
           Déjà un compte ?{" "}
           <Link
             href="/auth/login"
-            className="text-foreground font-medium underline underline-offset-4"
+            className="text-primary font-medium underline underline-offset-4"
           >
             Se connecter
           </Link>
@@ -46,7 +46,7 @@ export function SignupForm() {
       </div>
 
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <AuthEmailField />
           <PasswordField mode="signup" />
 
@@ -63,7 +63,7 @@ export function SignupForm() {
 
           <Button
             type="submit"
-            className="mt-2 h-12 w-full rounded-xl text-base font-semibold"
+            className="mt-1 h-12 w-full rounded-xl text-base font-semibold"
             disabled={isPending}
           >
             {isPending ? "Création…" : "Créer mon compte"}

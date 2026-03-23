@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { slideRow } from "@/lib/motion";
 import { Trash2, Folder } from "lucide-react";
-import { CATEGORY_ICON } from "@/constants/categories";
+import { CATEGORY_ICON, CATEGORY_COLOR } from "@/constants/categories";
 import { TransactionRowProps } from "./types";
 import { TransactionDescription } from "./transaction-description";
 import { TransactionAmount } from "./transaction-amount";
@@ -16,13 +16,14 @@ export function TransactionRow({
 }: TransactionRowProps) {
   const { category, description, type, amount, id } = transaction;
   const Icon = CATEGORY_ICON[category] ?? Folder;
+  const colorClass = CATEGORY_COLOR[category] ?? "bg-gray-100 text-gray-600";
 
   return (
     <motion.div
       {...slideRow(delay)}
-      className="flex items-center gap-3 px-4 py-3.5"
+      className="flex items-center gap-3 border-b border-muted/60 px-4 py-3.5 last:border-b-0"
     >
-      <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
+      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${colorClass}`}>
         <Icon className="h-5 w-5" />
       </div>
       <TransactionDescription category={category} description={description} />
