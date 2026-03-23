@@ -47,3 +47,16 @@ export const CATEGORY_ICON: Record<string, LucideIcon> = {
   Abonnements: Smartphone,
   Autres: Folder,
 };
+
+export const CATEGORY_COLOR: Record<string, string> = {
+  Salaire: "bg-teal-100 text-teal-700",
+  Freelance: "bg-blue-100 text-blue-700",
+  Investissements: "bg-green-100 text-green-700",
+  Loyer: "bg-orange-100 text-orange-700",
+  Alimentation: "bg-amber-100 text-amber-700",
+  Transport: "bg-sky-100 text-sky-700",
+  Loisirs: "bg-violet-100 text-violet-700",
+  Santé: "bg-rose-100 text-rose-700",
+  Abonnements: "bg-indigo-100 text-indigo-700",
+  Autres: "bg-gray-100 text-gray-600",
+};

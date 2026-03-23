@@ -21,9 +21,9 @@ export function PageShell({
   return (
     <div className="min-h-screen">
       <main
-        className={`mx-auto max-w-md px-4 md:max-w-2xl md:px-8 md:pb-10 ${paddingBottom}`}
+        className={`mx-auto max-w-md px-4 md:max-w-3xl md:px-10 md:pb-10 ${paddingBottom}`}
       >
-        <div className="flex items-start justify-between pt-10 pb-6 md:pt-8 md:pb-8">
+        <div className="flex items-start justify-between pt-10 pb-6 md:pt-10 md:pb-8">
           <div>
             <p className="text-muted-foreground mb-1 text-xs font-medium tracking-widest uppercase">
               {label}

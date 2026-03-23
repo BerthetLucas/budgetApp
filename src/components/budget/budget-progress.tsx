@@ -12,7 +12,7 @@ export function BudgetProgress({ progressPercent, lastDay }: BudgetProgressProps
   return (
     <motion.div
       {...fadeUp(0.2)}
-      className="bg-card rounded-3xl p-5"
+      className="bg-card rounded-2xl border border-[#191d17] p-5 shadow-[4px_4px_0_0_#191d17]"
     >
       <div className="mb-3 flex items-center justify-between">
         <p className="text-muted-foreground text-xs font-medium">Avancement du mois</p>
@@ -23,7 +23,7 @@ export function BudgetProgress({ progressPercent, lastDay }: BudgetProgressProps
           initial={{ width: 0 }}
           animate={{ width: `${progressPercent}%` }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          className="bg-foreground h-full rounded-full"
+          className="bg-primary h-full rounded-full"
         />
       </div>
       <div className="text-muted-foreground mt-2 flex justify-between text-xs">

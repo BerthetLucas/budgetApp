@@ -18,7 +18,7 @@ interface CategoryBreakdownProps {
 
 export function CategoryBreakdown({ data, total }: CategoryBreakdownProps) {
   return (
-    <div className="bg-background divide-y overflow-hidden rounded-2xl border shadow-sm">
+    <div className="bg-card overflow-hidden rounded-2xl border border-[#191d17] shadow-[3px_3px_0_0_#191d17]">
       {data.map((entry, index) => {
         const pct = total > 0 ? Math.round((entry.value / total) * 100) : 0;
         const Icon = entry.icon;
@@ -26,7 +26,7 @@ export function CategoryBreakdown({ data, total }: CategoryBreakdownProps) {
           <motion.div
             key={entry.name}
             {...slideRow(index * 0.05)}
-            className="flex items-center gap-3 px-4 py-3.5"
+            className="flex items-center gap-3 border-b border-muted/60 px-4 py-3.5 last:border-b-0"
           >
             <span
               className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -37,9 +37,15 @@ export function CategoryBreakdown({ data, total }: CategoryBreakdownProps) {
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium leading-tight">{entry.name}</p>
-              <p className="text-muted-foreground mt-0.5 text-xs">
-                {pct}% du total
-              </p>
+              <div className="mt-1.5 flex items-center gap-2">
+                <div className="bg-muted h-1.5 flex-1 overflow-hidden rounded-full">
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{ width: `${pct}%`, background: entry.fill }}
+                  />
+                </div>
+                <span className="text-muted-foreground shrink-0 text-xs">{pct}%</span>
+              </div>
             </div>
             <span className="text-sm font-bold tabular-nums">
               {formatCurrency(entry.value)} €

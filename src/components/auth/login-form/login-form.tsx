@@ -29,14 +29,14 @@ export function LoginForm() {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-1.5">
-        <h1 className="text-3xl font-bold tracking-tight">Connexion</h1>
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-xl font-bold tracking-tight">Connexion</h1>
         <p className="text-muted-foreground text-sm">
           Pas encore de compte ?{" "}
           <Link
             href="/auth/signup"
-            className="text-foreground font-medium underline underline-offset-4"
+            className="text-primary font-medium underline underline-offset-4"
           >
             S&apos;inscrire
           </Link>
@@ -44,7 +44,7 @@ export function LoginForm() {
       </div>
 
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <AuthEmailField />
           <PasswordField mode="login" />
 
@@ -56,7 +56,7 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            className="mt-2 h-12 w-full rounded-xl text-base font-semibold"
+            className="mt-1 h-12 w-full rounded-xl text-base font-semibold"
             disabled={isPending}
           >
             {isPending ? "Connexion…" : "Se connecter"}
