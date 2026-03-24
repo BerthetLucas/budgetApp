@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useOptimistic, useTransition } from "react";
-import { Settings2, Folder } from "lucide-react";
+import { Settings2, Folder, X } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
@@ -30,7 +31,9 @@ const DEFAULT_CATEGORIES = [
   ...EXPENSE_CATEGORIES.map((name) => ({ name, type: "expense" as const })),
 ];
 
-export function ManageCategoriesDrawer({ initialData }: ManageCategoriesDrawerProps) {
+export function ManageCategoriesDrawer({
+  initialData,
+}: ManageCategoriesDrawerProps) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [list, removeFromList] = useOptimistic(
@@ -56,8 +59,13 @@ export function ManageCategoriesDrawer({ initialData }: ManageCategoriesDrawerPr
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-md">
-          <DrawerHeader className="px-4">
+          <DrawerHeader className="flex flex-row items-center justify-between px-4">
             <DrawerTitle>Gérer les catégories</DrawerTitle>
+            <DrawerClose asChild>
+              <Button variant="outline" size="icon" className="h-8 w-8 border-[#191d17] shadow-[2px_2px_0_0_#191d17]">
+                <X className="h-4 w-4" />
+              </Button>
+            </DrawerClose>
           </DrawerHeader>
 
           <AddCategoryForm />
@@ -66,12 +74,17 @@ export function ManageCategoriesDrawer({ initialData }: ManageCategoriesDrawerPr
             {DEFAULT_CATEGORIES.map(({ name, type }) => {
               const Icon = CATEGORY_ICON[name] ?? Folder;
               return (
-                <div key={`${type}-${name}`} className="flex items-center gap-3 px-4 py-3">
+                <div
+                  key={`${type}-${name}`}
+                  className="flex items-center gap-3 px-4 py-3"
+                >
                   <div className="bg-muted flex h-9 w-9 shrink-0 items-center justify-center rounded-xl">
                     <Icon className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-foreground truncate text-sm font-medium">{name}</p>
+                    <p className="text-foreground truncate text-sm font-medium">
+                      {name}
+                    </p>
                     <p className="text-muted-foreground text-xs">
                       {type === "income" ? "Revenu" : "Dépense"} · par défaut
                     </p>

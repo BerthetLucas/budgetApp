@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
@@ -29,8 +30,13 @@ export function AddTransactionDrawer({ customCategories }: AddTransactionDrawerP
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-md px-4 pb-8">
-          <DrawerHeader className="px-0">
+          <DrawerHeader className="flex flex-row items-center justify-between px-0">
             <DrawerTitle>Nouvelle transaction</DrawerTitle>
+            <DrawerClose asChild>
+              <Button variant="outline" size="icon" className="h-8 w-8 border-[#191d17] shadow-[2px_2px_0_0_#191d17]">
+                <X className="h-4 w-4" />
+              </Button>
+            </DrawerClose>
           </DrawerHeader>
           <TransactionForm onSuccess={() => setOpen(false)} customCategories={customCategories} />
         </div>

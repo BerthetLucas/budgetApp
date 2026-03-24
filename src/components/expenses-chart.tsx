@@ -61,7 +61,7 @@ export function ExpensesChart({ transactions }: ExpensesChartProps) {
             exit={{ opacity: 0 }}
             className="space-y-6"
           >
-            <div className="relative rounded-2xl border border-[#191d17] bg-white shadow-[4px_4px_0_0_#191d17]">
+            <div className="relative rounded-2xl border border-[#191d17] bg-card shadow-[4px_4px_0_0_#191d17]">
               <ResponsiveContainer width="100%" height={240}>
                 <PieChart>
                   <Pie
