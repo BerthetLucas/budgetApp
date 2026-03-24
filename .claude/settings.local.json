@@ -5,7 +5,8 @@
       "mcp__stitch__generate_screen_from_text",
       "mcp__stitch__get_screen",
       "mcp__stitch__list_screens",
-      "WebFetch(domain:lh3.googleusercontent.com)"
+      "WebFetch(domain:lh3.googleusercontent.com)",
+      "Bash(find /Users/lucasberthet/Documents/myfiniancalapp -type f \\\\\\(-name *service*worker* -o -name *sw* -o -name *pwa* \\\\\\))"
     ]
   }
 }

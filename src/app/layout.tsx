@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito, Space_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SwRegister } from "@/components/sw-register";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -20,6 +21,18 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: "My Financial App",
   description: "Gérez votre budget et vos finances personnelles",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Budget",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#6D28D9",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -34,6 +47,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           {children}
+          <SwRegister />
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>
