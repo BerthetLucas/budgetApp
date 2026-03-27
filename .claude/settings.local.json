@@ -7,7 +7,11 @@
       "mcp__stitch__list_screens",
       "WebFetch(domain:lh3.googleusercontent.com)",
       "Bash(find /Users/lucasberthet/Documents/myfiniancalapp -type f \\\\\\(-name *service*worker* -o -name *sw* -o -name *pwa* \\\\\\))",
-      "Bash(pnpm add:*)"
+      "Bash(pnpm add:*)",
+      "Bash(ls:*)",
+      "Bash(find /Users/lucasberthet/Documents/myfiniancalapp -type f -name *.sql -o -name schema* -o -name migration* -o -name *.prisma -o -name drizzle*)",
+      "Bash(grep -r \"create table\\\\|CREATE TABLE\" /Users/lucasberthet/Documents/myfiniancalapp --include=*.sql --include=*.ts --include=*.tsx --include=*.md)",
+      "Bash(grep -r \"user_id\\\\|user\\\\.id\\\\|auth\" /Users/lucasberthet/Documents/myfiniancalapp/src/actions --include=*.ts)"
     ]
   }
 }

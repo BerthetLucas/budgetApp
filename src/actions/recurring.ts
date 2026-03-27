@@ -53,54 +53,43 @@ export async function deleteRecurringTransaction(id: string) {
 export async function checkAndApplyRecurringTransactions() {
   const supabase = await createClient();
 
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-
-  const alreadyApplied = await hasBeenAppliedThisMonth(supabase, year, month);
-  if (alreadyApplied) return;
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) throw new Error("Utilisateur non authentifié");
 
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+
+  const { error: claimError } = await supabase
+    .from("recurring_applied_months")
+    .insert([{ year, month, user_id: user.id }]);
+
+  if (claimError) return;
+
   const recurring = await fetchRecurringTransactions(supabase);
   if (recurring.length === 0) return;
 
-  const transactions = buildTransactionsForMonth(recurring, user.id, year, month);
+  const transactions = buildTransactionsForMonth(
+    recurring,
+    user.id,
+    year,
+    month
+  );
 
   const { error: insertError } = await supabase
     .from("transactions")
     .insert(transactions);
   if (insertError) throw new Error(insertError.message);
-
-  await supabase
-    .from("recurring_applied_months")
-    .insert([{ year, month, user_id: user.id }]);
-
-  revalidatePath("/");
-  revalidatePath("/stats");
 }
 
 // ─── Helpers privés ───────────────────────────────────────────────────────────
 
-async function hasBeenAppliedThisMonth(
-  supabase: Awaited<ReturnType<typeof import("@/lib/supabase/server").createClient>>,
-  year: number,
-  month: number
-): Promise<boolean> {
-  const { data } = await supabase
-    .from("recurring_applied_months")
-    .select("id")
-    .eq("year", year)
-    .eq("month", month)
-    .maybeSingle();
-  return !!data;
-}
-
 async function fetchRecurringTransactions(
-  supabase: Awaited<ReturnType<typeof import("@/lib/supabase/server").createClient>>
+  supabase: Awaited<
+    ReturnType<typeof import("@/lib/supabase/server").createClient>
+  >
 ): Promise<RecurringTransaction[]> {
   const { data, error } = await supabase
     .from("recurring_transactions")
