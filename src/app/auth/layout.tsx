@@ -21,13 +21,25 @@ export default function AuthLayout({
       </div>
 
       <div className="bg-card w-full max-w-sm rounded-2xl border border-[#191d17] p-8 shadow-[4px_4px_0_0_#191d17]">
+        <div className="mb-5 space-y-2 rounded-xl border border-yellow-400 bg-yellow-50 px-4 py-3 text-xs text-yellow-800 dark:border-yellow-500 dark:bg-yellow-950/40 dark:text-yellow-300">
+          <p>
+            <strong>Projet en développement</strong> — cette application n&apos;est
+            pas encore stable. Des pertes de données ou des interruptions de
+            service peuvent survenir.
+          </p>
+          <p>
+            Vous pouvez{" "}
+            <strong>tester sans créer de compte</strong> via le bouton
+            &quot;Accès démo&quot; ci-dessous.
+          </p>
+        </div>
         {children}
       </div>
 
       <p className="text-muted-foreground mt-6 text-center text-xs">
         En continuant, vous acceptez nos{" "}
         <Link
-          href="#"
+          href="/mentions-legales"
           className="hover:text-foreground underline underline-offset-4"
         >
           Conditions d&apos;utilisation

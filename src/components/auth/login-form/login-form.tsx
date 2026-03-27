@@ -15,6 +15,22 @@ export function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
+  function onDemoLogin() {
+    setError(null);
+    startTransition(async () => {
+      try {
+        await signIn(
+          process.env.NEXT_PUBLIC_DEMO_EMAIL!,
+          process.env.NEXT_PUBLIC_DEMO_PASSWORD!
+        );
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Une erreur est survenue"
+        );
+      }
+    });
+  }
+
   function onSubmit(values: LoginFormValues) {
     setError(null);
     startTransition(async () => {
@@ -60,6 +76,22 @@ export function LoginForm() {
             disabled={isPending}
           >
             {isPending ? "Connexion…" : "Se connecter"}
+          </Button>
+
+          <div className="relative my-2 flex items-center gap-3">
+            <div className="border-border h-px flex-1 border-t" />
+            <span className="text-muted-foreground text-xs">ou</span>
+            <div className="border-border h-px flex-1 border-t" />
+          </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="h-12 w-full rounded-xl text-base font-semibold"
+            disabled={isPending}
+            onClick={onDemoLogin}
+          >
+            {isPending ? "Connexion…" : "Accès démo"}
           </Button>
         </form>
       </FormProvider>
