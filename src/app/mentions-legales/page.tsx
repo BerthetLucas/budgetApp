@@ -79,11 +79,9 @@ export default function MentionsLegalesPage() {
             </li>
           </ul>
 
-          <h3 className="pt-2 text-sm font-semibold">
-            Durée de conservation
-          </h3>
+          <h3 className="pt-2 text-sm font-semibold">Durée de conservation</h3>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Les données sont conservées le temps de l'existence du compte. À la
+            Les données sont conservées le temps de l&apos;existence du compte. À la
             suppression du compte, toutes les données sont effacées.
           </p>
 
@@ -91,14 +89,14 @@ export default function MentionsLegalesPage() {
             Base légale du traitement
           </h3>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Le traitement est fondé sur l'exécution du contrat (art. 6.1.b
-            RGPD) — vous utilisez le service en connaissance de cause.
+            Le traitement est fondé sur l&apos;exécution du contrat (art. 6.1.b RGPD)
+            — vous utilisez le service en connaissance de cause.
           </p>
 
           <h3 className="pt-2 text-sm font-semibold">Vos droits</h3>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Vous disposez d'un droit d'accès, de rectification, d'effacement,
-            de portabilité et d'opposition sur vos données. Pour exercer ces
+            Vous disposez d&apos;un droit d&apos;accès, de rectification, d&apos;effacement, de
+            portabilité et d&apos;opposition sur vos données. Pour exercer ces
             droits, contactez :{" "}
             <a
               href="mailto:lu.berthet@gmail.com"
@@ -108,8 +106,7 @@ export default function MentionsLegalesPage() {
             </a>
             <br />
             En cas de litige, vous pouvez introduire une réclamation auprès de
-            la{" "}
-            <strong>CNIL</strong> (cnil.fr).
+            la <strong>CNIL</strong> (cnil.fr).
           </p>
 
           <h3 className="pt-2 text-sm font-semibold">Transfert de données</h3>
@@ -124,8 +121,8 @@ export default function MentionsLegalesPage() {
           <h2 className="font-bold">4. Cookies</h2>
           <p className="text-sm leading-relaxed">
             Ce site utilise uniquement un cookie de session nécessaire au
-            fonctionnement de l'authentification. Aucun cookie publicitaire ou
-            de tracking tiers n'est utilisé.
+            fonctionnement de l&apos;authentification. Aucun cookie publicitaire ou
+            de tracking tiers n&apos;est utilisé.
           </p>
         </section>
       </div>
