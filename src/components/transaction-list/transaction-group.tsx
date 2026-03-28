@@ -16,7 +16,8 @@ export function TransactionGroup({
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  const fmt = (d: Date) => d.toISOString().split("T")[0];
+  const fmt = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const label =
     date === fmt(today)
       ? "Aujourd'hui"
