@@ -11,7 +11,19 @@
       "Bash(ls:*)",
       "Bash(find /Users/lucasberthet/Documents/myfiniancalapp -type f -name *.sql -o -name schema* -o -name migration* -o -name *.prisma -o -name drizzle*)",
       "Bash(grep -r \"create table\\\\|CREATE TABLE\" /Users/lucasberthet/Documents/myfiniancalapp --include=*.sql --include=*.ts --include=*.tsx --include=*.md)",
-      "Bash(grep -r \"user_id\\\\|user\\\\.id\\\\|auth\" /Users/lucasberthet/Documents/myfiniancalapp/src/actions --include=*.ts)"
+      "Bash(grep -r \"user_id\\\\|user\\\\.id\\\\|auth\" /Users/lucasberthet/Documents/myfiniancalapp/src/actions --include=*.ts)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(for file:*)",
+      "Bash(do)",
+      "Bash(if grep:*)",
+      "Bash(then)",
+      "Bash(echo \"FAIL: $file still contains #191d17\")",
+      "Bash(echo \"OK: $file has correct shadow variable\")",
+      "Bash(else)",
+      "Bash(echo \"FAIL: $file missing shadow variable\")",
+      "Bash(fi)",
+      "Bash(git -C /Users/lucasberthet/Documents/budgetApp log ff250b317a78207f06bc7a7bf71cc203acf7601d..377eccaf9cff0124bfec1c47b78b427730bd6c23 --oneline)"
     ]
   }
 }
