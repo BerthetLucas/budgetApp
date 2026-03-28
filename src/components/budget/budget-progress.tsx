@@ -12,7 +12,7 @@ export function BudgetProgress({ progressPercent, lastDay }: BudgetProgressProps
   return (
     <motion.div
       {...fadeUp(0.2)}
-      className="bg-card rounded-2xl border border-[#191d17] p-5 shadow-[4px_4px_0_0_#191d17]"
+      className="bg-card rounded-2xl border border-border p-5 shadow-[4px_4px_0_0_var(--shadow-hard)]"
     >
       <div className="mb-3 flex items-center justify-between">
         <p className="text-muted-foreground text-xs font-medium">Avancement du mois</p>

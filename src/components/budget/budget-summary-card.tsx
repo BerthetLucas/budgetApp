@@ -22,7 +22,7 @@ export function BudgetSummaryCard({
   return (
     <motion.div
       {...fadeUp()}
-      className="bg-card text-foreground rounded-2xl border border-[#191d17] p-6 shadow-[4px_4px_0_0_#191d17]"
+      className="bg-card text-foreground rounded-2xl border border-border p-6 shadow-[4px_4px_0_0_var(--shadow-hard)]"
     >
       <p className="text-muted-foreground mb-2 text-sm font-medium">Solde restant ce mois</p>
       <p className="mb-1 text-4xl font-bold tracking-tight">
