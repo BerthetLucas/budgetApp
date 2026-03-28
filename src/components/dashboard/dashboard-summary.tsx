@@ -32,14 +32,14 @@ export function DashboardSummary({ transactions }: DashboardSummaryProps) {
         {formatCurrency(balance)} €
       </p>
       <div className="flex gap-4">
-        <div className="flex-1 rounded-2xl bg-emerald-50 px-4 py-3">
+        <div className="flex-1 rounded-2xl bg-emerald-500/10 px-4 py-3">
           <p className="mb-0.5 text-xs text-emerald-500">Revenus</p>
-          <p className="text-sm font-bold text-emerald-600">
+          <p className="text-sm font-bold text-emerald-500">
             +{formatCurrency(totalIncome)} €
           </p>
         </div>
-        <div className="flex-1 rounded-2xl bg-red-50 px-4 py-3">
-          <p className="mb-0.5 text-xs text-red-400">Dépenses</p>
+        <div className="flex-1 rounded-2xl bg-red-500/10 px-4 py-3">
+          <p className="mb-0.5 text-xs text-red-500">Dépenses</p>
           <p className="text-sm font-bold text-red-500">
             -{formatCurrency(totalExpenses)} €
           </p>
