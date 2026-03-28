@@ -12,11 +12,21 @@ export function TransactionGroup({
   isPending,
   onDelete,
 }: TransactionGroupProps) {
-  const label = new Date(date + "T00:00:00").toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  });
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const fmt = (d: Date) => d.toISOString().split("T")[0];
+  const label =
+    date === fmt(today)
+      ? "Aujourd'hui"
+      : date === fmt(yesterday)
+      ? "Hier"
+      : new Date(date + "T00:00:00").toLocaleDateString("fr-FR", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+        });
 
   return (
     <motion.div {...fadeUpSm(baseDelay)}>
