@@ -25,10 +25,10 @@ export function PageShell({
       >
         <div className="flex items-start justify-between pt-10 pb-6 md:pt-10 md:pb-8">
           <div>
-            <p className="text-muted-foreground mb-1 text-xs font-medium tracking-widest uppercase">
+            <p className="text-primary mb-1 text-xs font-medium tracking-widest uppercase">
               {label}
             </p>
-            <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+            <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
           </div>
           <div className="flex items-center gap-3">
             {headerAction}
