@@ -19,10 +19,15 @@ export function BudgetSummaryCard({
 }: BudgetSummaryCardProps) {
   const spentPercent = totalIncome > 0 ? Math.min(Math.round((totalExpenses / totalIncome) * 100), 100) : 0;
 
+  const progressColor =
+    spentPercent >= 90 ? "bg-red-500" :
+    spentPercent >= 70 ? "bg-amber-500" :
+    "bg-emerald-500";
+
   return (
     <motion.div
       {...fadeUp()}
-      className="bg-card text-foreground rounded-2xl border border-[#191d17] p-6 shadow-[4px_4px_0_0_#191d17]"
+      className="bg-card text-foreground rounded-2xl border border-border p-6 shadow-[4px_4px_0_0_var(--shadow-hard)]"
     >
       <p className="text-muted-foreground mb-2 text-sm font-medium">Solde restant ce mois</p>
       <p className="mb-1 text-4xl font-bold tracking-tight">
@@ -33,19 +38,19 @@ export function BudgetSummaryCard({
       </p>
       <div className="bg-muted mb-4 h-2 w-full overflow-hidden rounded-full">
         <div
-          className="bg-primary h-full rounded-full transition-all duration-500"
+          className={`h-full rounded-full transition-all duration-500 ${progressColor}`}
           style={{ width: `${spentPercent}%` }}
         />
       </div>
       <div className="flex gap-4">
-        <div className="flex-1 rounded-2xl bg-emerald-50 px-4 py-3">
+        <div className="flex-1 rounded-2xl bg-emerald-500/10 px-4 py-3">
           <p className="mb-0.5 text-xs text-emerald-500">Revenus</p>
-          <p className="text-sm font-bold text-emerald-600">
+          <p className="text-sm font-bold text-emerald-500">
             +{formatCurrency(totalIncome)} €
           </p>
         </div>
-        <div className="flex-1 rounded-2xl bg-red-50 px-4 py-3">
-          <p className="mb-0.5 text-xs text-red-400">Dépenses</p>
+        <div className="flex-1 rounded-2xl bg-red-500/10 px-4 py-3">
+          <p className="mb-0.5 text-xs text-red-500">Dépenses</p>
           <p className="text-sm font-bold text-red-500">
             -{formatCurrency(totalExpenses)} €
           </p>

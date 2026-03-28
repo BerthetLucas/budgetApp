@@ -20,7 +20,7 @@ export function BudgetMetricCard({
   return (
     <motion.div
       {...fadeUp(delay)}
-      className="bg-card rounded-2xl border border-[#191d17] p-5 shadow-[4px_4px_0_0_#191d17]"
+      className="bg-card rounded-2xl border border-border p-5 shadow-[4px_4px_0_0_var(--shadow-hard)]"
     >
       <p className="text-muted-foreground mb-3 text-xs font-medium">{label}</p>
       <p className="text-2xl font-bold tracking-tight">

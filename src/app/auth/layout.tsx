@@ -20,7 +20,7 @@ export default function AuthLayout({
         </div>
       </div>
 
-      <div className="bg-card w-full max-w-sm rounded-2xl border border-[#191d17] p-8 shadow-[4px_4px_0_0_#191d17]">
+      <div className="bg-card w-full max-w-sm rounded-2xl border border-border p-8 shadow-[4px_4px_0_0_var(--shadow-hard)]">
         <div className="mb-5 space-y-2 rounded-xl border border-yellow-400 bg-yellow-50 px-4 py-3 text-xs text-yellow-800 dark:border-yellow-500 dark:bg-yellow-950/40 dark:text-yellow-300">
           <p>
             <strong>Projet en développement</strong> — cette application n&apos;est

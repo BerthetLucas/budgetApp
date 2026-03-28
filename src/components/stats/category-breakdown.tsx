@@ -18,7 +18,7 @@ interface CategoryBreakdownProps {
 
 export function CategoryBreakdown({ data, total }: CategoryBreakdownProps) {
   return (
-    <div className="bg-card overflow-hidden rounded-2xl border border-[#191d17] shadow-[3px_3px_0_0_#191d17]">
+    <div className="bg-card overflow-hidden rounded-2xl border border-border shadow-[3px_3px_0_0_var(--shadow-hard)]">
       {data.map((entry, index) => {
         const pct = total > 0 ? Math.round((entry.value / total) * 100) : 0;
         const Icon = entry.icon;

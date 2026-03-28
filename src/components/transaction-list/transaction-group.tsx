@@ -12,18 +12,29 @@ export function TransactionGroup({
   isPending,
   onDelete,
 }: TransactionGroupProps) {
-  const label = new Date(date + "T00:00:00").toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  });
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const fmt = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const label =
+    date === fmt(today)
+      ? "Aujourd'hui"
+      : date === fmt(yesterday)
+      ? "Hier"
+      : new Date(date + "T00:00:00").toLocaleDateString("fr-FR", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+        });
 
   return (
     <motion.div {...fadeUpSm(baseDelay)}>
       <p className="text-muted-foreground mb-2 px-1 text-xs font-semibold tracking-wide uppercase">
         {label}
       </p>
-      <div className="bg-card overflow-hidden rounded-2xl border border-[#191d17] shadow-[3px_3px_0_0_#191d17]">
+      <div className="bg-card overflow-hidden rounded-2xl border border-border shadow-[3px_3px_0_0_var(--shadow-hard)]">
         <AnimatePresence initial={false}>
           {transactions.map((transaction, i) => (
             <TransactionRow
