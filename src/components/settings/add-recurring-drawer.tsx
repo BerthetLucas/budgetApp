@@ -33,7 +33,7 @@ export function AddRecurringDrawer({ customCategories }: AddRecurringDrawerProps
           <DrawerHeader className="flex flex-row items-center justify-between px-0">
             <DrawerTitle>Nouvelle transaction récurrente</DrawerTitle>
             <DrawerClose asChild>
-              <Button variant="outline" size="icon" className="h-8 w-8 border-[#191d17] shadow-[2px_2px_0_0_#191d17]">
+              <Button variant="outline" size="icon" className="h-8 w-8 border-border shadow-[2px_2px_0_0_var(--shadow-hard)]">
                 <X className="h-4 w-4" />
               </Button>
             </DrawerClose>

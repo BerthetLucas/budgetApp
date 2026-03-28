@@ -23,7 +23,7 @@ export function TransactionGroup({
       <p className="text-muted-foreground mb-2 px-1 text-xs font-semibold tracking-wide uppercase">
         {label}
       </p>
-      <div className="bg-card overflow-hidden rounded-2xl border border-[#191d17] shadow-[3px_3px_0_0_#191d17]">
+      <div className="bg-card overflow-hidden rounded-2xl border border-border shadow-[3px_3px_0_0_var(--shadow-hard)]">
         <AnimatePresence initial={false}>
           {transactions.map((transaction, i) => (
             <TransactionRow
