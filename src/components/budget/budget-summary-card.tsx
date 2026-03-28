@@ -19,6 +19,11 @@ export function BudgetSummaryCard({
 }: BudgetSummaryCardProps) {
   const spentPercent = totalIncome > 0 ? Math.min(Math.round((totalExpenses / totalIncome) * 100), 100) : 0;
 
+  const progressColor =
+    spentPercent >= 90 ? "bg-red-500" :
+    spentPercent >= 70 ? "bg-amber-500" :
+    "bg-emerald-500";
+
   return (
     <motion.div
       {...fadeUp()}
@@ -33,7 +38,7 @@ export function BudgetSummaryCard({
       </p>
       <div className="bg-muted mb-4 h-2 w-full overflow-hidden rounded-full">
         <div
-          className="bg-primary h-full rounded-full transition-all duration-500"
+          className={`h-full rounded-full transition-all duration-500 ${progressColor}`}
           style={{ width: `${spentPercent}%` }}
         />
       </div>
