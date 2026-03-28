@@ -110,6 +110,7 @@
   --font-serif: var(--font-nunito), sans-serif;
   --font-mono: var(--font-space-mono), monospace;
   --shadow-color: #1a1a1a;
+  --shadow-hard: oklch(0.1 0 0);
   --shadow-opacity: 0.05;
   --shadow-blur: 0px;
   --shadow-spread: 0px;
@@ -166,6 +167,7 @@
   --font-serif: var(--font-nunito), sans-serif;
   --font-mono: var(--font-space-mono), monospace;
   --shadow-color: #1a1a1a;
+  --shadow-hard: oklch(0.65 0 0);
   --shadow-opacity: 0.05;
   --shadow-blur: 0px;
   --shadow-spread: 0px;
