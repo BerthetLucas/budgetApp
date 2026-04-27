@@ -9,11 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@base-ui/react": "^1.4.0",
+    "@base-ui/react": "^1.4.1",
     "@ducanh2912/next-pwa": "^10.2.9",
     "@hookform/resolvers": "^5.2.2",
     "@supabase/ssr": "^0.10.2",
-    "@supabase/supabase-js": "^2.104.0",
+    "@supabase/supabase-js": "^2.104.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "class-variance-authority": "^0.7.1",
@@ -42,7 +42,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.7.2",
+    "prettier-plugin-tailwindcss": "^0.7.3",
     "tailwindcss": "^4",
     "typescript": "^6"
   }
